@@ -1,0 +1,155 @@
+/* ------------------------------------------------------------------
+   Toronto Inclusion Cup — Fairplay skin
+   Material-3 hexes → gem --rs-* tokens (space-separated RGB triplets).
+   Loaded AFTER rinkscore-theme.css via tournament.skin_css.
+   Page archetype: zigzag · Style pack: Sportsbook-Clean
+   ------------------------------------------------------------------ */
+
+:root {
+  /* Brand — Navy primary, Red urgency, Gold winner, Fair Play Blue accent. */
+  --rs-primary:           0 32 70;            /* #002046 deep navy */
+  --rs-primary-strong:    27 54 93;           /* #1b365d primary-container */
+  --rs-on-primary:        255 255 255;
+  --rs-secondary:         187 0 39;           /* #bb0027 jersey red */
+  --rs-on-secondary:      255 255 255;
+  --rs-accent:            0 119 182;          /* #0077b6 fair-play-blue */
+  --rs-on-accent:         255 255 255;
+
+  /* Surfaces — cool neutral / ice-white stack */
+  --rs-surface:           247 249 251;        /* #f7f9fb */
+  --rs-surface-sunken:    236 238 240;        /* #eceef0 */
+  --rs-surface-elevated:  255 255 255;
+  --rs-surface-overlay:   224 227 229;        /* #e0e3e5 */
+  --rs-on-surface:        25 28 30;           /* #191c1e */
+  --rs-on-surface-muted:  68 71 78;           /* #44474e */
+
+  /* Soft accents */
+  --rs-secondary-soft:    255 218 216;        /* #ffdad8 secondary-fixed */
+  --rs-accent-soft:       214 227 255;        /* #d6e3ff primary-fixed (Fair Play soft) */
+  --rs-tag-bg:            224 227 229;
+  --rs-tag-text:          25 28 30;
+
+  /* Hairlines — slate-300-ish, sparing per DESIGN.md */
+  --rs-hairline:          196 198 207;        /* #c4c6cf outline-variant */
+  --rs-hairline-strong:   116 119 127;        /* #74777f outline */
+
+  --rs-danger:            186 26 26;
+  --rs-on-danger:         255 255 255;
+
+  /* Medal tints — gold winner per DESIGN.md (Tertiary Gold) */
+  --rs-medal-gold:        203 167 47;         /* #cba72f tertiary-container */
+  --rs-medal-gold-soft:   255 224 136;        /* #ffe088 tertiary-fixed */
+  --rs-medal-silver:      116 119 127;
+  --rs-medal-silver-soft: 224 227 229;
+  --rs-medal-bronze:      154 52 18;
+  --rs-medal-bronze-soft: 254 215 170;
+
+  --rs-font-headline:     "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-body:         "Inter",   ui-sans-serif, system-ui, sans-serif;
+  --rs-font-label:        "Archivo", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ------------------------------------------------------------------
+   Sportsbook-Clean component helpers.
+   ------------------------------------------------------------------ */
+
+/* Hero logo — big size per Mode B revise 2026-06-10. Authored in skin CSS
+   to avoid Tailwind arbitrary-px JIT risk. */
+.ic-hero-logo {
+  height: 300px;   /* 240px × 1.25 */
+  width: auto;
+}
+@media (min-width: 768px) {
+  .ic-hero-logo {
+    height: 400px; /* 320px × 1.25 */
+  }
+}
+
+/* Section eyebrow with Fair Play Blue accent rule (per DESIGN.md spec). */
+.ic-eyebrow-rule {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--rs-font-label);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: rgb(var(--rs-accent));
+}
+.ic-eyebrow-rule::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  background-color: rgb(var(--rs-accent));
+}
+
+/* Gold variant (used for winner-related headers). */
+.ic-eyebrow-rule.ic-gold       { color: rgb(var(--rs-medal-gold)); }
+.ic-eyebrow-rule.ic-gold::before { background-color: rgb(var(--rs-medal-gold)); }
+
+/* Structural 2px bar — Primary Navy. */
+.ic-bar-primary {
+  height: 2px;
+  background-color: rgb(var(--rs-primary));
+  border: 0;
+}
+.ic-bar-accent {
+  height: 2px;
+  background-color: rgb(var(--rs-accent));
+  border: 0;
+}
+
+/* Scoreboard cell grid — 5 tracks: time/away/score-gap/home/status.
+   Authored here (not Tailwind utilities) to bypass JIT drop on multi-track arbitrary grid-cols. */
+.ic-game-grid {
+  display: grid;
+  grid-template-columns: 56px 1fr 76px 1fr 64px;
+  column-gap: 8px;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .ic-game-grid {
+    grid-template-columns: 72px 1fr 92px 1fr 80px;
+    column-gap: 16px;
+  }
+}
+
+/* Standings table grid — 8 tracks: rank/team/GP/W/T/L/GD/PTS. */
+.ic-stand-grid {
+  display: grid;
+  grid-template-columns: 32px 1fr 28px 28px 28px 28px 36px 40px;
+  column-gap: 6px;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .ic-stand-grid {
+    grid-template-columns: 40px 1fr 40px 40px 40px 40px 48px 56px;
+    column-gap: 10px;
+  }
+}
+
+/* Zigzag row alternation — even rows put the image on the right. */
+.ic-zig-row { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+@media (min-width: 768px) {
+  .ic-zig-row { grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .ic-zig-row.ic-zig-flip > .ic-zig-img { order: 2; }
+  .ic-zig-row.ic-zig-flip > .ic-zig-text { order: 1; }
+}
+
+/* Rank-letter swatch above team mascot (gold / silver / bronze / muted-fourth). */
+.ic-rank-letter {
+  font-family: var(--rs-font-headline);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.ic-rank-letter.ic-rank-1 { color: rgb(var(--rs-medal-gold)); }
+.ic-rank-letter.ic-rank-2 { color: rgb(var(--rs-medal-silver)); }
+.ic-rank-letter.ic-rank-3 { color: rgb(var(--rs-medal-bronze)); }
+.ic-rank-letter.ic-rank-n { color: rgb(var(--rs-on-surface-muted)); }
+
+/* Gold row tint for #1 standings (DESIGN.md: "use Gold text or subtle Gold bg for #1 ranked team"). */
+.ic-stand-row-1 { background-color: rgb(var(--rs-medal-gold-soft) / 0.35); }

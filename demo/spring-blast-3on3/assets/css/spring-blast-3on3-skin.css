@@ -1,0 +1,509 @@
+/* ============================================================================
+   spring-blast-3on3 skin — ElectricVictory (Energy · mid-tournament · timeline)
+   ============================================================================ */
+:root {
+  /* Primary = acid-lime celebration accent; on-primary = deep ink */
+  --rs-primary:           195 244   0;  /* #C3F400 acid lime */
+  --rs-primary-strong:    171 214   0;  /* #ABD600 dim variant */
+  --rs-on-primary:         22  30   0;  /* #161E00 */
+  --rs-secondary:         200 198 197;  /* #C8C6C5 light grey */
+  --rs-on-secondary:       49  48  48;  /* #313030 */
+  --rs-accent:            229 226 225;  /* #E5E2E1 (near-white text) */
+  --rs-on-accent:          22  22  22;  /* #161616 */
+
+  /* Surfaces */
+  --rs-surface:            19  19  19;  /* #131313 obsidian */
+  --rs-surface-sunken:     14  14  14;  /* #0E0E0E */
+  --rs-surface-elevated:   32  31  31;  /* #201F1F */
+  --rs-surface-overlay:    42  42  42;  /* #2A2A2A */
+  --rs-on-surface:        229 226 225;  /* #E5E2E1 */
+  --rs-on-surface-muted:  142 147 121;  /* #8E9379 olive-mute outline */
+
+  /* Soft accents */
+  --rs-secondary-soft:     71  71  70;  /* #474746 */
+  --rs-accent-soft:        68  73  51;  /* #444933 outline-variant */
+  --rs-tag-bg:             53  53  52;
+  --rs-tag-text:          196 201 172;  /* #C4C9AC */
+
+  /* Hairlines */
+  --rs-hairline:           68  73  51;  /* outline-variant */
+  --rs-hairline-strong:   142 147 121;  /* outline */
+
+  /* Status */
+  --rs-danger:            255 180 171;
+  --rs-on-danger:         105   0   5;
+
+  /* Medal tints — re-tuned for dark + acid-lime synergy */
+  --rs-medal-gold:        195 244   0;  /* lime IS our gold */
+  --rs-medal-gold-soft:    90 110   0;
+  --rs-medal-silver:      200 198 197;
+  --rs-medal-silver-soft:  90  88  88;
+  --rs-medal-bronze:      215 130  60;
+  --rs-medal-bronze-soft: 115  60  20;
+
+  /* Typography — Anybody (display) + Geist (body, label) */
+  --rs-font-headline:     "Anybody", "Arial Black", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-body:         "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-label:        "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ============================================================================
+   Body — solid near-black with a faint diagonal scan-line motif
+   ============================================================================ */
+body {
+  background-color: rgb(var(--rs-surface));
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0px,
+    transparent 12px,
+    rgba(195, 244, 0, 0.018) 12px,
+    rgba(195, 244, 0, 0.018) 13px
+  );
+}
+
+/* ============================================================================
+   Section kicker numerals — oversized display numerals (kicker-numerals
+   theme dimension) — uniquely Anybody at 80px on desktop, big enough
+   to read as visual chrome
+   ============================================================================ */
+.sb-sec-num {
+  font-family: var(--rs-font-headline);
+  font-weight: 900;
+  font-size: 64px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgb(var(--rs-primary));
+  display: inline-block;
+}
+@media (min-width: 768px) {
+  .sb-sec-num { font-size: 88px; }
+}
+
+.sb-sec-eyebrow {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface-muted));
+}
+
+.sb-sec-title {
+  font-family: var(--rs-font-headline);
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: rgb(var(--rs-on-surface));
+}
+@media (min-width: 768px) {
+  .sb-sec-title { font-size: 42px; }
+}
+
+/* ============================================================================
+   TIMELINE rail — the page's anchor archetype.
+   Vertical rail down the left with day markers; games anchor to the rail.
+   ============================================================================ */
+.sb-timeline {
+  position: relative;
+  padding-left: 56px;
+}
+@media (min-width: 768px) {
+  .sb-timeline { padding-left: 100px; }
+}
+.sb-timeline::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: rgb(var(--rs-hairline-strong) / 0.4);
+}
+@media (min-width: 768px) {
+  .sb-timeline::before { left: 42px; }
+}
+
+/* Day marker — chunky circular node on the rail */
+.sb-day-marker {
+  position: relative;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+.sb-day-marker:first-child { margin-top: 0; }
+.sb-day-node {
+  position: absolute;
+  left: -56px;
+  top: 4px;
+  width: 44px; height: 44px;
+  background-color: rgb(var(--rs-primary));
+  color: rgb(var(--rs-on-primary));
+  font-family: var(--rs-font-headline);
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+@media (min-width: 768px) {
+  .sb-day-node { left: -100px; width: 72px; height: 72px; font-size: 22px; }
+}
+.sb-day-label {
+  font-family: var(--rs-font-headline);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: rgb(var(--rs-on-surface));
+}
+@media (min-width: 768px) {
+  .sb-day-label { font-size: 30px; }
+}
+.sb-day-sub {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface-muted));
+  margin-top: 0.25rem;
+}
+
+/* Game node — anchored to the rail with a small connector dot */
+.sb-game {
+  position: relative;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgb(var(--rs-hairline) / 0.6);
+  background-color: rgb(var(--rs-surface-elevated));
+  margin-bottom: 0.75rem;
+  transition: border-color 200ms;
+}
+.sb-game::before {
+  content: "";
+  position: absolute;
+  left: -42px;
+  top: 28px;
+  width: 18px;
+  height: 1px;
+  background-color: rgb(var(--rs-hairline-strong) / 0.6);
+}
+.sb-game::after {
+  content: "";
+  position: absolute;
+  left: -28px;
+  top: 22px;
+  width: 12px; height: 12px;
+  background-color: rgb(var(--rs-surface));
+  border: 2px solid rgb(var(--rs-hairline-strong));
+}
+@media (min-width: 768px) {
+  .sb-game::before { left: -64px; width: 26px; }
+  .sb-game::after  { left: -34px; }
+}
+
+/* Played game — filled lime dot */
+.sb-game.played::after {
+  background-color: rgb(var(--rs-primary));
+  border-color: rgb(var(--rs-primary));
+}
+.sb-game.played { border-color: rgb(var(--rs-hairline-strong) / 0.5); }
+
+/* Upcoming game — hollow dot, slight opacity on text */
+.sb-game.upcoming .sb-game-time {
+  color: rgb(var(--rs-primary));
+}
+.sb-game.upcoming .sb-game-score {
+  color: rgb(var(--rs-on-surface-muted));
+  font-style: normal;
+}
+
+/* Medal-game tint */
+.sb-game.medal-gold {
+  border-color: rgb(var(--rs-primary));
+  background-color: rgb(195 244 0 / 0.06);
+}
+/* Only fill the rail dot when the game is actually played.
+   Unplayed gold medal games keep the hollow dot from the base .sb-game::after. */
+.sb-game.medal-gold.played::after {
+  background-color: rgb(var(--rs-primary));
+  border-color: rgb(var(--rs-primary));
+}
+.sb-game.medal-bronze {
+  border-color: rgb(215 130 60 / 0.6);
+  background-color: rgb(215 130 60 / 0.06);
+}
+
+/* Game-row interior grid */
+.sb-game-row {
+  display: grid;
+  grid-template-columns: 1fr 64px 1fr;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+@media (min-width: 768px) {
+  .sb-game-row {
+    grid-template-columns: 64px 1fr 96px 1fr 80px;
+    column-gap: 1rem;
+  }
+}
+.sb-game-num {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: rgb(var(--rs-primary));
+  display: none;
+}
+@media (min-width: 768px) {
+  .sb-game-num { display: block; }
+}
+.sb-game-team {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.15;
+  color: rgb(var(--rs-on-surface));
+}
+.sb-game-team.right { text-align: right; }
+@media (min-width: 768px) {
+  .sb-game-team { font-size: 18px; }
+  .sb-game-team.right { text-align: left; }
+}
+.sb-game-score {
+  font-family: var(--rs-font-headline);
+  font-weight: 900;
+  font-size: 22px;
+  text-align: center;
+  color: rgb(var(--rs-primary));
+  letter-spacing: 0.02em;
+}
+@media (min-width: 768px) {
+  .sb-game-score { font-size: 28px; }
+}
+.sb-game-time {
+  font-family: var(--rs-font-label);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: rgb(var(--rs-on-surface-muted));
+  text-align: right;
+}
+.sb-game-label {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-primary));
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* ============================================================================
+   Standings — ranked-rows with #1 highlighted in acid-lime
+   ============================================================================ */
+.sb-stand-row {
+  display: grid;
+  grid-template-columns: 36px 1fr 32px 32px 32px 32px 44px 52px;
+  column-gap: 6px;
+  align-items: center;
+  padding: 0.85rem 0.75rem;
+  border-bottom: 1px solid rgb(var(--rs-hairline) / 0.4);
+}
+@media (min-width: 768px) {
+  .sb-stand-row {
+    grid-template-columns: 48px 1fr 40px 40px 40px 40px 56px 64px;
+    column-gap: 10px;
+    padding: 1rem 1rem;
+  }
+}
+.sb-stand-row.sb-stand-header {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgb(var(--rs-primary) / 0.5);
+}
+.sb-stand-row.sb-stand-rank-1 {
+  background-color: rgb(195 244 0 / 0.10);
+  box-shadow: inset 4px 0 0 0 rgb(var(--rs-primary));
+}
+.sb-rank-num {
+  font-family: var(--rs-font-headline);
+  font-weight: 900;
+  font-size: 22px;
+  color: rgb(var(--rs-on-surface));
+}
+.sb-stand-row.sb-stand-rank-1 .sb-rank-num { color: rgb(var(--rs-primary)); }
+.sb-stand-team {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 15px;
+  color: rgb(var(--rs-on-surface));
+}
+@media (min-width: 768px) {
+  .sb-stand-team { font-size: 17px; }
+}
+.sb-stand-num {
+  font-family: var(--rs-font-label);
+  font-size: 13px;
+  text-align: center;
+  color: rgb(var(--rs-on-surface-muted));
+}
+.sb-stand-pts {
+  font-family: var(--rs-font-headline);
+  font-weight: 900;
+  font-size: 18px;
+  text-align: right;
+  color: rgb(var(--rs-on-surface));
+}
+.sb-stand-row.sb-stand-rank-1 .sb-stand-pts { color: rgb(var(--rs-primary)); }
+
+/* ============================================================================
+   Team card — 4-up logo wall
+   ============================================================================ */
+.sb-team-card {
+  position: relative;
+  background-color: rgb(var(--rs-surface-elevated));
+  border: 1px solid rgb(var(--rs-hairline) / 0.5);
+  padding: 1.25rem;
+  text-align: center;
+  transition: border-color 200ms;
+}
+.sb-team-card:hover { border-color: rgb(var(--rs-primary) / 0.7); }
+.sb-team-card.sb-team-rank-1::before {
+  content: "LIVE LEADER";
+  position: absolute;
+  top: -10px; left: 50%;
+  transform: translateX(-50%);
+  background-color: rgb(var(--rs-primary));
+  color: rgb(var(--rs-on-primary));
+  font-family: var(--rs-font-label);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 0.25rem 0.65rem;
+}
+.sb-team-logo-wrap {
+  background-color: white;
+  aspect-ratio: 1 / 1;
+  width: 88px;
+  margin: 0 auto 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.6rem;
+}
+.sb-team-name {
+  font-family: var(--rs-font-headline);
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1.15;
+  color: rgb(var(--rs-on-surface));
+}
+.sb-team-home {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: rgb(var(--rs-on-surface-muted));
+  margin-top: 0.35rem;
+}
+.sb-team-record {
+  font-family: var(--rs-font-headline);
+  font-weight: 800;
+  font-size: 18px;
+  color: rgb(var(--rs-primary));
+  margin-top: 0.6rem;
+  letter-spacing: 0.04em;
+}
+.sb-team-record-label {
+  font-family: var(--rs-font-label);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: rgb(var(--rs-on-surface-muted));
+  text-transform: uppercase;
+}
+
+/* ============================================================================
+   Status pill — LIVE / IN PROGRESS
+   ============================================================================ */
+.sb-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgb(var(--rs-primary) / 0.5);
+  background-color: rgb(var(--rs-primary) / 0.10);
+  color: rgb(var(--rs-primary));
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.sb-live-pill::before {
+  content: "";
+  width: 8px; height: 8px;
+  background-color: rgb(var(--rs-primary));
+  box-shadow: 0 0 10px rgb(var(--rs-primary)), 0 0 20px rgb(195 244 0 / 0.5);
+  animation: sb-pulse 1.6s ease-in-out infinite;
+}
+@keyframes sb-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* ============================================================================
+   Fundraiser — chunky icon-led CTA tile (replaced progress-bar style; Energy
+   demos lean on rhythm + accent, not donor-receipt math)
+   ============================================================================ */
+.sb-fund-tile {
+  position: relative;
+  background-color: rgb(var(--rs-surface-elevated));
+  border: 1px solid rgb(var(--rs-hairline) / 0.5);
+  border-bottom: 3px solid rgb(var(--rs-primary));
+  padding: 1.75rem 1.5rem 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 200ms, transform 200ms;
+}
+.sb-fund-tile:hover {
+  border-color: rgb(var(--rs-primary));
+  transform: translateY(-2px);
+}
+.sb-fund-icon {
+  width: 56px;
+  height: 56px;
+  background-color: rgb(var(--rs-primary));
+  color: rgb(var(--rs-on-primary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+}
+.sb-fund-icon .material-symbols-outlined {
+  font-size: 28px;
+  font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+}
+.sb-fund-kicker {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-primary));
+  margin-bottom: 0.55rem;
+}
+.sb-fund-title {
+  font-family: var(--rs-font-headline);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: rgb(var(--rs-on-surface));
+  margin-bottom: 0.65rem;
+}
+@media (min-width: 768px) {
+  .sb-fund-title { font-size: 26px; }
+}
+.sb-fund-desc {
+  font-family: var(--rs-font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgb(var(--rs-on-surface-muted));
+  flex: 1;
+}
+
+/* ============================================================================
+   Whole-card hyperlink (per [[feedback_no_cta_text_prompts]])
+   ============================================================================ */
+.sb-link { display: block; text-decoration: none; }

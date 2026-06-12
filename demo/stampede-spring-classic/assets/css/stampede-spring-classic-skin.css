@@ -1,0 +1,104 @@
+/* ------------------------------------------------------------------
+   Stampede City Spring Classic — JuniorStars skin
+   Maps DESIGN.md Material-3 hexes → gem --rs-* role tokens.
+   Loaded AFTER rinkscore-theme.css via tournament.skin_css.
+   Page archetype: stat+dossier hybrid · Style pack: Friendly-Youth
+   ------------------------------------------------------------------ */
+
+:root {
+  /* Brand — JuniorStars royal blue + red + gold (USA all-stars palette) */
+  --rs-primary:           0 64 168;          /* #0040a8 royal blue */
+  --rs-primary-strong:    43 89 195;         /* #2b59c3 */
+  --rs-on-primary:        255 255 255;
+  --rs-secondary:         182 23 34;         /* #b61722 red */
+  --rs-on-secondary:      255 255 255;
+  --rs-accent:            205 167 0;         /* #cda700 gold */
+  --rs-on-accent:         77 62 0;           /* #4d3e00 */
+
+  /* Surfaces — light tonal stack (JuniorStars surface family) */
+  --rs-surface:           252 249 248;       /* #fcf9f8 */
+  --rs-surface-sunken:    246 243 242;       /* #f6f3f2 */
+  --rs-surface-elevated:  255 255 255;
+  --rs-surface-overlay:   240 237 237;       /* #f0eded */
+  --rs-on-surface:        28 27 27;          /* #1c1b1b */
+  --rs-on-surface-muted:  67 70 83;          /* #434653 */
+
+  /* Soft accents — used for chips, soft fills, podium spotlights */
+  --rs-secondary-soft:    255 218 215;       /* #ffdad7 */
+  --rs-accent-soft:       255 224 127;       /* #ffe07f */
+  --rs-tag-bg:            219 225 255;       /* #dbe1ff primary-fixed */
+  --rs-tag-text:          0 24 74;           /* #00184a on-primary-fixed */
+
+  /* Hairlines */
+  --rs-hairline:          229 226 225;       /* #e5e2e1 surface-variant */
+  --rs-hairline-strong:   195 198 213;       /* #c3c6d5 outline-variant */
+
+  /* Typography — Quicksand (display/label) + Rubik (body) per DESIGN.md */
+  --rs-font-headline:     "Quicksand", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-body:         "Rubik",     ui-sans-serif, system-ui, sans-serif;
+  --rs-font-label:        "Quicksand", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ------------------------------------------------------------------
+   Per-tournament helpers (scoped, named with the slug prefix)
+   ------------------------------------------------------------------ */
+
+/* SECTION HEADERS — numbered editorial pattern (01 / 02 / 03 / ...). */
+.ssc-num {
+  font-family: var(--rs-font-headline);
+  font-weight: 800;
+  font-size: 4rem;            /* 64px — big ghost numerals */
+  line-height: 1;
+  color: rgb(var(--rs-primary) / 0.12);
+  letter-spacing: -0.04em;
+}
+@media (min-width: 768px) { .ssc-num { font-size: 6rem; } }
+
+/* STAT-BAND — oversized numerals */
+.ssc-stat-num {
+  font-family: var(--rs-font-headline);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-size: 3rem;
+}
+@media (min-width: 768px) { .ssc-stat-num { font-size: 4.5rem; } }
+
+/* PODIUM — height ratios for the gold/silver/bronze blocks */
+.ssc-podium-gold   { height: 14rem; }
+.ssc-podium-silver { height: 11rem; }
+.ssc-podium-bronze { height:  9rem; }
+@media (min-width: 768px) {
+  .ssc-podium-gold   { height: 18rem; }
+  .ssc-podium-silver { height: 14rem; }
+  .ssc-podium-bronze { height: 11rem; }
+}
+
+/* CHAMPION ROW highlight on standings */
+.ssc-row-champion {
+  background-color: rgb(var(--rs-accent) / 0.16);
+}
+.ssc-row-champion .ssc-rank,
+.ssc-row-champion .ssc-pts {
+  color: rgb(var(--rs-accent));
+  font-weight: 700;
+}
+
+/* Day-header for grouped games */
+.ssc-day-header {
+  font-family: var(--rs-font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: rgb(var(--rs-primary));
+  font-size: 0.875rem;
+}
+
+/* Medal-game rows lean on the vendored gem rules — no overrides needed. */
+
+/* Footer SVG icon hover */
+.ssc-social-icon {
+  color: rgb(var(--rs-on-surface-muted));
+  transition: color .15s ease;
+}
+.ssc-social-icon:hover { color: rgb(var(--rs-primary)); }

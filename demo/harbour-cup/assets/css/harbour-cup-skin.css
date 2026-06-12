@@ -1,0 +1,152 @@
+/* ------------------------------------------------------------------
+   Harbour Cup Spring Classic — YouthSpirit skin
+   Page archetype: timeline · Style pack: Friendly-Youth × Collegiate
+   ------------------------------------------------------------------ */
+
+:root {
+  /* Brand — YouthSpirit slate-blue + mint + lavender (Maritimes recreational) */
+  --rs-primary:           66 97 125;          /* #42617d slate-blue */
+  --rs-primary-strong:    41 73 100;          /* #294964 */
+  --rs-on-primary:        255 255 255;
+  --rs-secondary:         54 103 88;          /* #366758 mint-forest */
+  --rs-on-secondary:      255 255 255;
+  --rs-accent:            104 89 112;         /* #685970 lavender-warm */
+  --rs-on-accent:         255 255 255;
+
+  /* Surfaces — light warm-neutral */
+  --rs-surface:           248 249 250;        /* #f8f9fa */
+  --rs-surface-sunken:    243 244 245;        /* #f3f4f5 */
+  --rs-surface-elevated:  255 255 255;
+  --rs-surface-overlay:   237 238 239;        /* #edeeef */
+  --rs-on-surface:        25 28 29;           /* #191c1d */
+  --rs-on-surface-muted:  66 71 77;           /* #42474d */
+
+  /* Soft accents */
+  --rs-secondary-soft:    185 238 219;        /* #b9eedb mint-soft */
+  --rs-accent-soft:       239 220 247;        /* #efdcf7 lavender-soft */
+  --rs-tag-bg:            205 229 255;        /* #cde5ff primary-fixed */
+  --rs-tag-text:          0 29 50;            /* #001d32 on-primary-fixed */
+
+  /* Hairlines */
+  --rs-hairline:          225 227 228;        /* #e1e3e4 surface-variant */
+  --rs-hairline-strong:   194 199 206;        /* #c2c7ce outline-variant */
+
+  /* Typography — Quicksand (display/label) + Plus Jakarta Sans (body) per DESIGN.md */
+  --rs-font-headline:     "Quicksand", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-body:         "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-label:        "Quicksand", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ------------------------------------------------------------------
+   Per-tournament helpers — `.hc-*` (Harbour Cup)
+   ------------------------------------------------------------------ */
+
+/* TIMELINE — the page spine. A vertical rail with day-markers + game cards. */
+.hc-rail {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg,
+    rgb(var(--rs-secondary) / 0.20) 0%,
+    rgb(var(--rs-primary)   / 0.40) 50%,
+    rgb(var(--rs-secondary) / 0.20) 100%);
+}
+/* Mobile: rail on the left. Desktop: rail centered. */
+.hc-rail        { left: 1.25rem; }
+@media (min-width: 768px) { .hc-rail { left: 50%; transform: translateX(-50%); } }
+
+/* Day-marker chip — 2-line stacked (DAY N / FRI · JUN 5) */
+.hc-day-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 0.625rem 1.125rem;
+  border-radius: 1rem;
+  background: rgb(var(--rs-primary));
+  color: rgb(var(--rs-on-primary));
+  font-family: var(--rs-font-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.hc-day-chip-num  { font-size: 15px; }
+.hc-day-chip-date { font-size: 12px; opacity: 0.85; letter-spacing: 0.1em; }
+
+/* Game-card dot — marks the game position on the rail */
+.hc-rail-dot {
+  position: absolute;
+  width: 14px; height: 14px;
+  border-radius: 9999px;
+  background: rgb(var(--rs-surface-elevated));
+  border: 2px solid rgb(var(--rs-primary));
+}
+.hc-rail-dot { left: 0.875rem; transform: translateX(-50%); top: 1.5rem; }
+@media (min-width: 768px) { .hc-rail-dot { left: 50%; } }
+
+/* SECTION eyebrow — lowercase + small (different from stampede's ALL-CAPS numbered) */
+.hc-eyebrow {
+  font-family: var(--rs-font-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: rgb(var(--rs-secondary));
+}
+
+/* Section background palette — each section gets its own tone */
+.hc-bg-mint     { background-color: rgb(var(--rs-secondary-soft) / 0.35); }
+.hc-bg-lavender { background-color: rgb(var(--rs-accent-soft)    / 0.35); }
+.hc-bg-blue     { background-color: rgb(var(--rs-tag-bg)         / 0.55); }
+.hc-bg-cream    { background-color: rgb(var(--rs-surface));               }
+.hc-bg-grey     { background-color: rgb(var(--rs-surface-sunken));        }
+.hc-bg-white    { background-color: rgb(var(--rs-surface-elevated));      }
+
+/* Legacy alias retained for any caller; same as hc-bg-mint as a solid band. */
+.hc-mint-band   { background-color: rgb(var(--rs-secondary-soft) / 0.35); }
+
+/* Lighthouse beacon — subtle gradient header band behind hero */
+.hc-beacon-band {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgb(var(--rs-secondary-soft) / 0.45), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 100%, rgb(var(--rs-accent-soft) / 0.30), transparent 60%);
+}
+
+/* Venue card map placeholder bg */
+.hc-map-bg {
+  background:
+    repeating-linear-gradient(45deg,
+      rgb(var(--rs-secondary) / 0.05) 0px,
+      rgb(var(--rs-secondary) / 0.05) 12px,
+      rgb(var(--rs-primary) / 0.04)  12px,
+      rgb(var(--rs-primary) / 0.04)  24px);
+}
+
+/* Footer social icon */
+.hc-social-icon {
+  color: rgb(var(--rs-on-primary) / 0.85);
+  transition: color .15s ease;
+}
+.hc-social-icon:hover { color: rgb(var(--rs-on-primary)); }
+
+/* Sponsor marquee — continuous horizontal scroll. Track contains the sponsor
+   list TWICE; we translate by -50% so the loop is seamless. */
+@keyframes hc-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.hc-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+.hc-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: hc-marquee 40s linear infinite;
+}
+.hc-marquee:hover .hc-marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .hc-marquee-track { animation: none; transform: translateX(0); }
+}

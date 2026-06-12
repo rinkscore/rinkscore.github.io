@@ -1,0 +1,582 @@
+/* ============================================================================
+   pink-the-rink skin — PowerPlayPink · Fundraiser · light cream + hot pink
+   ============================================================================ */
+:root {
+  --rs-primary:           182   0  85;  /* #B60055 hot pink */
+  --rs-primary-strong:    143   0  65;  /* #8F0041 deep magenta */
+  --rs-on-primary:        255 255 255;
+  --rs-secondary:         159  55 111;  /* #9F376F secondary magenta-mauve */
+  --rs-on-secondary:      255 255 255;
+  --rs-accent:            252 131 191;  /* #FC83BF bright pink */
+  --rs-on-accent:         119  20  79;  /* #77144F */
+
+  --rs-surface:           252 249 248;  /* #FCF9F8 cream surface */
+  --rs-surface-sunken:    246 243 242;  /* #F6F3F2 */
+  --rs-surface-elevated:  255 255 255;  /* #FFFFFF lifted card */
+  --rs-surface-overlay:   240 237 237;  /* #F0EDED */
+  --rs-on-surface:         28  27  27;  /* #1C1B1B ink */
+  --rs-on-surface-muted:   92  63  69;  /* #5C3F45 muted mauve */
+
+  --rs-secondary-soft:    255 217 224;  /* #FFD9E0 primary-fixed (soft pink) */
+  --rs-accent-soft:       229 188 196;  /* #E5BCC4 outline-variant pink */
+  --rs-tag-bg:            255 217 224;
+  --rs-tag-text:          143   0  65;
+
+  --rs-hairline:          229 188 196;  /* #E5BCC4 pink hairline */
+  --rs-hairline-strong:   144 110 117;  /* #906E75 outline */
+
+  --rs-danger:            186  26  26;  /* #BA1A1A */
+  --rs-on-danger:         255 255 255;
+
+  --rs-medal-gold:        202 138   4;
+  --rs-medal-gold-soft:   254 249 195;
+  --rs-medal-silver:      120 130 145;
+  --rs-medal-silver-soft: 226 230 234;
+  --rs-medal-bronze:      154  72  28;
+  --rs-medal-bronze-soft: 254 215 170;
+
+  /* Typography — Barlow Condensed display + Manrope body */
+  --rs-font-headline:     "Barlow Condensed", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-body:         "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-label:        "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ============================================================================
+   Body — cream surface with faint pink-ribbon scan-line motif
+   ============================================================================ */
+body {
+  background-color: rgb(var(--rs-surface));
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0px,
+    transparent 28px,
+    rgba(182, 0, 85, 0.018) 28px,
+    rgba(182, 0, 85, 0.018) 29px
+  );
+}
+
+/* ============================================================================
+   Section header — eyebrow + display title
+   ============================================================================ */
+.pr-sec-eyebrow {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-primary));
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  background-color: rgb(var(--rs-secondary-soft));
+  border-radius: 999px;
+}
+
+.pr-sec-title {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface));
+}
+@media (min-width: 768px) {
+  .pr-sec-title { font-size: 48px; }
+}
+
+.pr-sec-lead {
+  font-family: var(--rs-font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgb(var(--rs-on-surface-muted));
+}
+@media (min-width: 768px) {
+  .pr-sec-lead { font-size: 17px; }
+}
+
+/* ============================================================================
+   HERO — immersive-hero with fundraising progress bar IN the hero
+   ============================================================================ */
+.pr-hero {
+  position: relative;
+  overflow: hidden;
+  background-color: rgb(var(--rs-surface));
+  background-image: radial-gradient(ellipse 80% 50% at 50% 20%, rgb(252 131 191 / 0.18) 0%, transparent 70%);
+}
+.pr-hero-stat-num {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: rgb(var(--rs-primary));
+}
+@media (min-width: 768px) {
+  .pr-hero-stat-num { font-size: 72px; }
+}
+.pr-hero-stat-label {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface-muted));
+  margin-top: 0.4rem;
+}
+@media (min-width: 768px) {
+  .pr-hero-stat-label { font-size: 12px; }
+}
+
+/* The actual progress bar in the hero */
+.pr-hero-bar {
+  height: 16px;
+  background-color: rgb(var(--rs-secondary-soft));
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+.pr-hero-bar-fill {
+  height: 100%;
+  background-image: linear-gradient(90deg, rgb(var(--rs-primary)) 0%, rgb(var(--rs-secondary)) 100%);
+  border-radius: 999px;
+  position: relative;
+  transition: width 1s ease-out;
+}
+.pr-hero-bar-pct {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 18px;
+  color: rgb(var(--rs-primary));
+  letter-spacing: 0.02em;
+}
+
+.pr-hero-stat-band {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid rgb(var(--rs-hairline));
+  border-bottom: 1px solid rgb(var(--rs-hairline));
+}
+.pr-hero-stat-band > div {
+  padding: 1.25rem 0;
+  text-align: center;
+  border-right: 1px solid rgb(var(--rs-hairline));
+}
+.pr-hero-stat-band > div:last-child { border-right: none; }
+@media (min-width: 768px) {
+  .pr-hero-stat-band > div { padding: 1.75rem 0; }
+}
+
+.pr-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.95rem;
+  background-color: rgb(var(--rs-secondary-soft));
+  color: rgb(var(--rs-primary-strong));
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: 999px;
+}
+.pr-status-chip::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 999px;
+  background-color: rgb(var(--rs-primary));
+}
+
+/* ============================================================================
+   PODIUM tile (tournament-over reveal below the hero)
+   ============================================================================ */
+.pr-podium-tile {
+  background-color: rgb(var(--rs-surface-elevated));
+  border: 1px solid rgb(var(--rs-hairline));
+  border-radius: 1rem;
+  padding: 1.5rem 1rem 1.75rem;
+  text-align: center;
+  transition: transform 200ms;
+}
+.pr-podium-tile:hover { transform: translateY(-2px); }
+.pr-podium-tile.gold   { border-top: 4px solid rgb(var(--rs-medal-gold)); }
+.pr-podium-tile.silver { border-top: 4px solid rgb(var(--rs-medal-silver)); }
+.pr-podium-tile.bronze { border-top: 4px solid rgb(var(--rs-medal-bronze)); }
+
+.pr-podium-letter {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.pr-podium-letter.gold   { color: rgb(var(--rs-medal-gold)); }
+.pr-podium-letter.silver { color: rgb(var(--rs-medal-silver)); }
+.pr-podium-letter.bronze { color: rgb(var(--rs-medal-bronze)); }
+
+.pr-podium-logo {
+  width: 96px; height: 96px;
+  background-color: rgb(var(--rs-surface-sunken));
+  border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1rem;
+  padding: 1rem;
+}
+.pr-podium-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.pr-podium-name {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface));
+}
+@media (min-width: 768px) {
+  .pr-podium-name { font-size: 26px; }
+}
+
+/* ============================================================================
+   Standings table — clean cream, #1 highlighted in pink
+   ============================================================================ */
+.pr-stand-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px 40px 40px 40px 56px;
+  column-gap: 8px;
+  align-items: center;
+  padding: 0.95rem 1rem;
+  border-top: 1px solid rgb(var(--rs-hairline));
+}
+.pr-stand-row.pr-stand-header {
+  border-top: 0;
+  border-bottom: 2px solid rgb(var(--rs-primary));
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.pr-stand-row.pr-stand-rank-1 {
+  background-color: rgb(var(--rs-secondary-soft) / 0.5);
+  box-shadow: inset 4px 0 0 0 rgb(var(--rs-primary));
+}
+.pr-stand-row.pr-stand-rank-1 .pr-stand-rank { color: rgb(var(--rs-primary)); }
+.pr-stand-row.pr-stand-rank-1 .pr-stand-pts  { color: rgb(var(--rs-primary)); }
+
+.pr-stand-rank {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 22px;
+  text-align: center;
+  color: rgb(var(--rs-on-surface));
+}
+.pr-stand-team {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface));
+}
+@media (min-width: 768px) {
+  .pr-stand-team { font-size: 18px; }
+}
+.pr-stand-num {
+  font-family: var(--rs-font-body);
+  font-size: 14px;
+  text-align: center;
+  color: rgb(var(--rs-on-surface-muted));
+}
+.pr-stand-pts {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 18px;
+  text-align: right;
+  color: rgb(var(--rs-on-surface));
+}
+
+/* ============================================================================
+   Team card — 4-up logo wall
+   ============================================================================ */
+.pr-team-card {
+  background-color: rgb(var(--rs-surface-elevated));
+  border: 1px solid rgb(var(--rs-hairline));
+  border-radius: 1rem;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  transition: border-color 200ms, transform 200ms;
+}
+.pr-team-card:hover {
+  border-color: rgb(var(--rs-primary) / 0.55);
+  transform: translateY(-2px);
+}
+.pr-team-card-logo {
+  width: 84px; height: 84px;
+  margin: 0 auto 1rem;
+  background-color: rgb(var(--rs-surface-sunken));
+  border-radius: 999px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.85rem;
+}
+.pr-team-card-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.pr-team-card-name {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface));
+  margin-bottom: 0.35rem;
+}
+.pr-team-card-home {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface-muted));
+  margin-bottom: 0.75rem;
+}
+.pr-team-card-record {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 16px;
+  color: rgb(var(--rs-primary));
+  letter-spacing: 0.04em;
+}
+.pr-team-card-raised {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgb(var(--rs-hairline));
+  width: 100%;
+}
+.pr-team-card-raised-num {
+  font-family: var(--rs-font-headline);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1;
+  color: rgb(var(--rs-primary));
+  letter-spacing: -0.01em;
+}
+.pr-team-card-raised-label {
+  font-family: var(--rs-font-label);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface-muted));
+  margin-top: 0.25rem;
+}
+.pr-team-card-raised-pct {
+  font-family: var(--rs-font-label);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface));
+  margin-top: 0.35rem;
+}
+
+/* ============================================================================
+   Confetti rain — embed.im-style falling paper inside the hero card
+   ============================================================================ */
+.pr-confetti-rain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.pr-confetti-piece {
+  position: absolute;
+  top: -24px;
+  opacity: 0.92;
+  animation-name: pr-confetti-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+  box-shadow: 0 0 0 0.5px rgba(0,0,0,0.04);
+}
+@keyframes pr-confetti-fall {
+  0% {
+    transform: translate3d(0, -24px, 0) rotate(var(--pr-rot-start, 0deg));
+    opacity: 0;
+  }
+  6% { opacity: 0.92; }
+  100% {
+    transform: translate3d(0, 760px, 0) rotate(calc(var(--pr-rot-start, 0deg) + 1080deg));
+    opacity: 0.92;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pr-confetti-piece { animation: none; opacity: 0.7; top: 18%; }
+}
+
+/* ============================================================================
+   Game row — date-grouped fixture cards
+   ============================================================================ */
+.pr-day-header {
+  font-family: var(--rs-font-label);
+  font-size: 12px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-primary));
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgb(var(--rs-primary));
+  margin-top: 2rem;
+  margin-bottom: 1.25rem;
+}
+.pr-day-header:first-of-type { margin-top: 0; }
+
+.pr-game {
+  background-color: rgb(var(--rs-surface-elevated));
+  border: 1px solid rgb(var(--rs-hairline));
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.pr-game.medal-gold   { border-color: rgb(var(--rs-medal-gold) / 0.6); background-color: rgb(254 249 195 / 0.5); }
+.pr-game.medal-bronze { border-color: rgb(var(--rs-medal-bronze) / 0.5); background-color: rgb(254 215 170 / 0.4); }
+
+.pr-game-grid {
+  display: grid;
+  grid-template-columns: 1fr 96px 1fr 64px;
+  column-gap: 0.5rem;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .pr-game-grid {
+    grid-template-columns: 56px 1fr 120px 1fr 80px;
+    column-gap: 1rem;
+  }
+}
+.pr-game-num {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  color: rgb(var(--rs-primary));
+  display: none;
+}
+@media (min-width: 768px) {
+  .pr-game-num { display: block; }
+}
+.pr-game-team {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface));
+}
+.pr-game-team.right { text-align: right; }
+@media (min-width: 768px) {
+  .pr-game-team { font-size: 18px; }
+}
+.pr-game-score {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+  color: rgb(var(--rs-primary));
+  letter-spacing: 0.02em;
+}
+.pr-game.medal-gold   .pr-game-score { color: rgb(var(--rs-medal-gold)); }
+.pr-game.medal-bronze .pr-game-score { color: rgb(var(--rs-medal-bronze)); }
+.pr-game-time {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgb(var(--rs-on-surface-muted));
+  text-align: right;
+}
+.pr-game-label {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-primary));
+  margin-top: 0.35rem;
+  display: block;
+}
+.pr-game.medal-gold   .pr-game-label { color: rgb(var(--rs-medal-gold)); }
+.pr-game.medal-bronze .pr-game-label { color: rgb(var(--rs-medal-bronze)); }
+
+/* ============================================================================
+   Fundraiser cards — full progress-bar treatment (Fundraiser-category default)
+   ============================================================================ */
+.pr-fund-card {
+  background-color: rgb(var(--rs-surface-elevated));
+  border: 1px solid rgb(var(--rs-hairline));
+  border-radius: 1rem;
+  padding: 1.5rem 1.5rem 1.75rem;
+  transition: border-color 200ms, transform 200ms;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.pr-fund-card:hover {
+  border-color: rgb(var(--rs-primary) / 0.55);
+  transform: translateY(-2px);
+}
+.pr-fund-kicker {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-primary));
+  margin-bottom: 0.55rem;
+}
+.pr-fund-title {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface));
+  margin-bottom: 0.65rem;
+}
+.pr-fund-desc {
+  font-family: var(--rs-font-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgb(var(--rs-on-surface-muted));
+  flex: 1;
+  margin-bottom: 1.25rem;
+}
+.pr-fund-raised {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: -0.01em;
+  color: rgb(var(--rs-primary));
+  line-height: 1;
+}
+.pr-fund-target {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface-muted));
+  padding-bottom: 4px;
+}
+.pr-fund-bar {
+  height: 8px;
+  background-color: rgb(var(--rs-secondary-soft));
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 0.6rem;
+}
+.pr-fund-bar-fill {
+  height: 100%;
+  background-color: rgb(var(--rs-primary));
+  border-radius: 999px;
+}
+.pr-fund-pct {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: rgb(var(--rs-primary));
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+  font-weight: 700;
+}
+
+/* ============================================================================
+   Whole-card hyperlink wrapper
+   ============================================================================ */
+.pr-link { display: block; text-decoration: none; }

@@ -1,0 +1,46 @@
+/* Nightfall Invitational — skin
+   EliteTournamentCircut design pack → --rs-* token overrides.
+   Loads AFTER rinkscore-theme.css via tournament.yaml > skin_css. */
+
+:root {
+  /* Brand — monochrome white-on-charcoal (Pro Broadcast) */
+  --rs-primary:           255 255 255;   /* #ffffff */
+  --rs-primary-strong:    226 226 226;   /* #e2e2e2 */
+  --rs-on-primary:         47  49  49;   /* #2f3131 */
+  --rs-secondary:         200 198 197;   /* #c8c6c5 */
+  --rs-on-secondary:       48  48  48;   /* #303030 */
+  --rs-accent:            255 255 255;   /* #ffffff — monochrome */
+  --rs-on-accent:          48  48  49;   /* #303031 */
+
+  /* Surfaces — Deep Inverse tonal stack */
+  --rs-surface:            19  19  19;   /* #131313 base charcoal */
+  --rs-surface-sunken:     14  14  14;   /* #0e0e0e */
+  --rs-surface-elevated:   53  53  52;   /* #353534 */
+  --rs-surface-overlay:    32  31  31;   /* #201f1f */
+  --rs-on-surface:        229 226 225;   /* #e5e2e1 */
+  --rs-on-surface-muted:  196 199 200;   /* #c4c7c8 */
+
+  /* Soft accents */
+  --rs-secondary-soft:     71  71  70;   /* #474746 */
+  --rs-accent-soft:        53  53  52;   /* #353534 */
+  --rs-tag-bg:             32  31  31;
+  --rs-tag-text:          229 226 225;
+
+  /* Hairlines — Ghost Outlines (#2A2A2A) */
+  --rs-hairline:           42  42  42;   /* #2a2a2a */
+  --rs-hairline-strong:   142 145 146;   /* #8e9192 */
+
+  /* Status */
+  --rs-danger:            255 180 171;   /* #ffb4ab */
+  --rs-on-danger:         105   0   5;
+
+  /* Medal tints — dark-theme-friendly soft fills */
+  --rs-medal-gold-soft:   202 138   4;
+  --rs-medal-silver-soft: 100 116 139;
+  --rs-medal-bronze-soft: 154  52  18;
+
+  /* Fonts — Inter throughout per Elite Tournament Circuit spec */
+  --rs-font-headline: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-body:     "Inter", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-label:    "Inter", ui-sans-serif, system-ui, sans-serif;
+}

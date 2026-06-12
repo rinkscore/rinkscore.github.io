@@ -1,0 +1,146 @@
+/* ------------------------------------------------------------------
+   Frost Bowl Heritage Cup — HeritageClassic skin
+   Material-3 hexes → gem --rs-* tokens (space-separated RGB triplets).
+   Loaded AFTER rinkscore-theme.css via tournament.skin_css.
+   Page archetype: overlap-split · Style pack: Classic-Collegiate
+   ------------------------------------------------------------------ */
+
+:root {
+  /* Brand — Forest Green primary, Parchment surfaces, Burnt-Copper accent. */
+  --rs-primary:           6 27 14;           /* #061b0e deep forest */
+  --rs-primary-strong:    27 48 34;          /* #1b3022 primary-container */
+  --rs-on-primary:        255 255 255;
+  --rs-secondary:         95 94 88;          /* #5f5e58 warm grey */
+  --rs-on-secondary:      255 255 255;
+  --rs-accent:            226 117 47;        /* #e2752f burnt copper */
+  --rs-on-accent:         255 255 255;
+
+  /* Surfaces — parchment / cream stack */
+  --rs-surface:           255 248 245;       /* #fff8f5 parchment */
+  --rs-surface-sunken:    245 236 231;       /* #f5ece7 */
+  --rs-surface-elevated:  255 255 255;       /* #ffffff card */
+  --rs-surface-overlay:   239 230 226;       /* #efe6e2 */
+  --rs-on-surface:        30 27 24;          /* #1e1b18 warm charcoal */
+  --rs-on-surface-muted:  67 72 67;          /* #434843 muted ink */
+
+  /* Soft accents */
+  --rs-secondary-soft:    226 223 216;       /* #e2dfd8 secondary-container */
+  --rs-accent-soft:       233 225 220;       /* #e9e1dc surface-variant */
+  --rs-tag-bg:            233 225 220;
+  --rs-tag-text:          30 27 24;
+
+  /* Hairlines — the load-bearing design element */
+  --rs-hairline:          195 200 193;       /* #c3c8c1 outline-variant */
+  --rs-hairline-strong:   115 121 115;       /* #737973 outline */
+
+  /* Status — kept gem-default */
+  --rs-danger:            186 26 26;
+  --rs-on-danger:         255 255 255;
+
+  /* Medal tints — kept gem-default; tournament is pre-tournament (no winners yet) */
+
+  /* Typography — IBM Plex Serif headlines + Hanken Grotesk body/label. */
+  --rs-font-headline:     "IBM Plex Serif", ui-serif, Georgia, serif;
+  --rs-font-body:         "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-label:        "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ------------------------------------------------------------------
+   Heritage-specific component helpers (kept tiny — composition lives
+   in the section includes; this file only carries reusable atoms.)
+   ------------------------------------------------------------------ */
+
+/* Editorial section eyebrow — uppercase label, hairline-underlined. */
+.fbh-eyebrow {
+  font-family: var(--rs-font-label);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: rgb(var(--rs-primary));
+}
+@media (min-width: 768px) {
+  .fbh-eyebrow { font-size: 12px; }
+}
+
+/* "Stamp" pill — jersey-tag style, used on team pool labels. */
+.fbh-stamp {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-family: var(--rs-font-label);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 10px;
+  border: 1.5px solid rgb(var(--rs-primary));
+  color: rgb(var(--rs-primary));
+  background: transparent;
+  border-radius: 2px;
+}
+.fbh-stamp.fbh-stamp-accent {
+  border-color: rgb(var(--rs-accent));
+  color: rgb(var(--rs-accent));
+}
+
+/* Hanging numeral (events list) — large serif numeral at row start. */
+.fbh-numeral {
+  font-family: var(--rs-font-headline);
+  font-weight: 600;
+  font-size: 44px;
+  line-height: 1;
+  color: rgb(var(--rs-primary));
+  letter-spacing: -0.02em;
+}
+@media (min-width: 768px) {
+  .fbh-numeral { font-size: 56px; }
+}
+
+/* Hairline rule — thin primary-tinted divider at low opacity. */
+.fbh-rule {
+  height: 1px;
+  background-color: rgb(var(--rs-hairline));
+  border: 0;
+}
+.fbh-rule-strong {
+  height: 2px;
+  background-color: rgb(var(--rs-primary));
+  border: 0;
+}
+
+/* Hero logo — 3× the original h-36/h-48 sizing per Mode B revise 2026-06-10.
+   Authored in skin CSS (no Tailwind arbitrary-px JIT risk). */
+.fbh-hero-logo {
+  height: 432px;   /* 3× the original 144px (h-36) */
+}
+@media (min-width: 768px) {
+  .fbh-hero-logo {
+    height: 576px; /* 3× the original 192px (h-48) */
+  }
+}
+
+/* Fixture-table row grid — authored in skin CSS to bypass Tailwind's JIT
+   drop on 6-token arbitrary grid-cols values. Six tracks:
+   game-num · time · away (right-aligned) · @ · home · score (right-aligned). */
+.fbh-game-row-grid {
+  display: grid;
+  grid-template-columns: 36px 60px 1fr 32px 1fr 50px;
+  column-gap: 12px;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .fbh-game-row-grid {
+    grid-template-columns: 44px 72px 1fr 44px 1fr 64px;
+    column-gap: 16px;
+  }
+}
+
+/* Indent under the team-pair row to align with the team-name columns. */
+.fbh-game-meta-line {
+  padding-left: calc(36px + 60px + 12px + 32px + 12px);
+}
+@media (min-width: 768px) {
+  .fbh-game-meta-line {
+    padding-left: calc(44px + 72px + 16px + 44px + 16px);
+  }
+}

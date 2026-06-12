@@ -1,0 +1,472 @@
+/* ============================================================================
+   skills-and-speed-open skin — VelocityIce · Energy · carousel-strip
+   ============================================================================ */
+:root {
+  --rs-primary:            77 221 187;  /* #4DDDBB mint-teal */
+  --rs-primary-strong:     24 188 156;  /* #18BC9C action-teal */
+  --rs-on-primary:           0  56  44; /* #00382C */
+  --rs-secondary:          181 200 223; /* #B5C8DF */
+  --rs-on-secondary:        32  50  67; /* #203243 */
+  --rs-accent:             255 180 165; /* #FFB4A5 coral */
+  --rs-on-accent:           96  19   5; /* #601305 */
+
+  --rs-surface:             18  20  20; /* #121414 */
+  --rs-surface-sunken:      12  15  15; /* #0C0F0F */
+  --rs-surface-elevated:    30  32  32; /* #1E2020 */
+  --rs-surface-overlay:     40  42  43; /* #282A2B */
+  --rs-on-surface:         226 226 226; /* #E2E2E2 */
+  --rs-on-surface-muted:   133 148 142; /* #85948E */
+
+  --rs-secondary-soft:      54  72  91; /* #36485B */
+  --rs-accent-soft:         60  74  69; /* #3C4A45 */
+  --rs-tag-bg:              51  53  53;
+  --rs-tag-text:           187 202 195; /* #BBCAC3 */
+
+  --rs-hairline:            60  74  69;
+  --rs-hairline-strong:    133 148 142;
+
+  --rs-danger:             255 180 171;
+  --rs-on-danger:          105   0   5;
+
+  --rs-medal-gold:          77 221 187;
+  --rs-medal-gold-soft:     30  90  80;
+  --rs-medal-silver:       181 200 223;
+  --rs-medal-silver-soft:   60  78  98;
+  --rs-medal-bronze:       250 134 110;  /* coral as bronze */
+  --rs-medal-bronze-soft:  100  45  30;
+
+  /* Typography — Barlow Condensed (display) + Montserrat (body, label) */
+  --rs-font-headline:     "Barlow Condensed", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-body:         "Montserrat", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-label:        "Montserrat", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ============================================================================
+   Body — dark with diagonal speed-stripe motif
+   ============================================================================ */
+body {
+  background-color: rgb(var(--rs-surface));
+  background-image: repeating-linear-gradient(
+    -68deg,
+    transparent 0px,
+    transparent 40px,
+    rgba(77, 221, 187, 0.015) 40px,
+    rgba(77, 221, 187, 0.015) 42px
+  );
+}
+
+/* ============================================================================
+   Marquee — endless horizontal scrolling display name (hero)
+   ============================================================================ */
+.ss-marquee-wrap {
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+.ss-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: ss-marquee-scroll 28s linear infinite;
+  white-space: nowrap;
+}
+.ss-marquee-track:hover { animation-play-state: paused; }
+@keyframes ss-marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ss-marquee-word {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 76px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  padding: 0 0.35em;
+  color: rgb(var(--rs-on-surface));
+}
+.ss-marquee-word.accent { color: rgb(var(--rs-primary)); }
+.ss-marquee-divider {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.5em;
+  color: rgb(var(--rs-primary));
+  font-size: 36px;
+}
+@media (min-width: 768px) {
+  .ss-marquee-word { font-size: 128px; }
+  .ss-marquee-divider { font-size: 56px; }
+}
+@media (min-width: 1280px) {
+  .ss-marquee-word { font-size: 168px; }
+  .ss-marquee-divider { font-size: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ss-marquee-track { animation: none; }
+}
+
+/* ============================================================================
+   Carousel-strip — horizontal scroll-snap rail per section
+   ============================================================================ */
+.ss-strip-wrap {
+  position: relative;
+}
+
+/* Prev / next arrow buttons — desktop only; mobile swipes natively */
+.ss-strip-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background-color: rgb(var(--rs-surface-elevated));
+  border: 1px solid rgb(var(--rs-primary) / 0.5);
+  color: rgb(var(--rs-primary));
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 200ms, color 200ms, border-color 200ms;
+}
+.ss-strip-nav:hover {
+  background-color: rgb(var(--rs-primary));
+  color: rgb(var(--rs-on-primary));
+  border-color: rgb(var(--rs-primary));
+}
+.ss-strip-nav.prev { left: 12px; }
+.ss-strip-nav.next { right: 12px; }
+@media (min-width: 768px) {
+  .ss-strip-nav { display: flex; }
+  .ss-strip-nav.prev { left: 16px; }
+  .ss-strip-nav.next { right: 16px; }
+}
+.ss-strip-nav svg {
+  width: 18px;
+  height: 18px;
+}
+.ss-strip {
+  display: flex;
+  gap: 0.85rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 16px;
+  padding: 0 16px 1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+@media (min-width: 768px) {
+  .ss-strip { gap: 1.25rem; scroll-padding-left: 48px; padding: 0 48px 1.5rem; }
+}
+.ss-strip-card {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+/* Custom scrollbar — sharp mint thread */
+.ss-strip::-webkit-scrollbar { height: 4px; }
+.ss-strip::-webkit-scrollbar-track { background: rgb(var(--rs-surface-sunken)); }
+.ss-strip::-webkit-scrollbar-thumb { background: rgb(var(--rs-primary)); }
+
+/* Strip end-card cue: "→ more" hint at the end */
+.ss-strip-end {
+  flex-shrink: 0;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--rs-on-surface-muted));
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ----------------------------------------------------------------------------
+   3-row variant — used by the schedule strip so games stack 3-per-column and
+   wrap into additional columns within the same day group.
+   ---------------------------------------------------------------------------- */
+.ss-strip.ss-strip-3row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, auto);
+  grid-auto-columns: max-content;
+  align-items: stretch;
+  gap: 0.85rem;
+}
+@media (min-width: 768px) {
+  .ss-strip.ss-strip-3row { gap: 1rem; }
+}
+.ss-strip.ss-strip-3row .ss-day-card { grid-row: span 3; }
+.ss-strip.ss-strip-3row .ss-strip-end { grid-row: span 3; }
+
+/* ----------------------------------------------------------------------------
+   Static variant — used by sparse sections (venue, fundraisers) where there's
+   nothing to scroll. Centers the cards, no scroll-snap, no arrow buttons.
+   ---------------------------------------------------------------------------- */
+.ss-strip.ss-strip-static {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: visible;
+  scroll-snap-type: none;
+  padding-bottom: 0;
+}
+
+/* ============================================================================
+   Section header — eyebrow + display title (uppercase-condensed)
+   ============================================================================ */
+.ss-sec {
+  padding: 4rem 0 5rem;
+}
+@media (min-width: 768px) {
+  .ss-sec { padding: 6rem 0 7rem; }
+}
+.ss-sec-eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0 16px 1rem;
+}
+@media (min-width: 768px) {
+  .ss-sec-eyebrow-row { padding: 0 48px 1.25rem; }
+}
+.ss-sec-eyebrow {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-primary));
+}
+.ss-sec-divider {
+  flex: 1;
+  height: 1px;
+  background-color: rgb(var(--rs-hairline) / 0.6);
+}
+.ss-sec-title-row {
+  padding: 0 16px 1.5rem;
+}
+@media (min-width: 768px) {
+  .ss-sec-title-row { padding: 0 48px 2rem; }
+}
+.ss-sec-title {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface));
+}
+@media (min-width: 768px) {
+  .ss-sec-title { font-size: 56px; }
+}
+
+/* ============================================================================
+   Team card — strip variant (vertical card)
+   ============================================================================ */
+.ss-team {
+  width: 240px;
+  background-color: rgb(var(--rs-surface-elevated));
+  border: 1px solid rgb(var(--rs-hairline) / 0.4);
+  border-top: 3px solid rgb(var(--rs-primary));
+  padding: 1.25rem;
+  transition: border-color 200ms, transform 200ms;
+}
+.ss-team:hover {
+  border-color: rgb(var(--rs-primary) / 0.7);
+  transform: translateY(-2px);
+}
+@media (min-width: 768px) {
+  .ss-team { width: 280px; padding: 1.5rem; }
+}
+.ss-team-logo {
+  background-color: white;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.85rem;
+  margin-bottom: 1rem;
+}
+.ss-team-logo img { max-height: 100%; max-width: 100%; object-fit: contain; }
+.ss-team-name {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface));
+  margin-bottom: 0.35rem;
+}
+.ss-team-home {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-primary));
+  margin-bottom: 0.75rem;
+}
+.ss-team-desc {
+  font-family: var(--rs-font-body);
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgb(var(--rs-on-surface-muted));
+}
+
+/* ============================================================================
+   Game card — broadcast-card with sharp coral accent for medal games
+   ============================================================================ */
+.ss-game {
+  width: 280px;
+  background-color: rgb(var(--rs-surface-elevated));
+  border: 1px solid rgb(var(--rs-hairline) / 0.4);
+  padding: 1rem 1.25rem;
+  transition: border-color 200ms;
+}
+@media (min-width: 768px) {
+  .ss-game { width: 320px; padding: 1.25rem 1.5rem; }
+}
+.ss-game-kicker {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-primary));
+  margin-bottom: 0.5rem;
+}
+.ss-game-time {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1;
+  color: rgb(var(--rs-on-surface));
+  margin-bottom: 0.85rem;
+}
+.ss-game-vs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.ss-game-team {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface));
+  flex: 1;
+}
+.ss-game-team.right { text-align: right; }
+.ss-game-vs-pill {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: rgb(var(--rs-primary));
+  padding: 0.25rem 0.5rem;
+  border: 1px solid rgb(var(--rs-primary) / 0.4);
+  background-color: rgb(var(--rs-surface));
+}
+.ss-game.medal-gold {
+  border-top: 3px solid rgb(var(--rs-primary));
+}
+.ss-game.medal-gold .ss-game-kicker { color: rgb(var(--rs-primary)); font-weight: 700; }
+.ss-game.medal-bronze {
+  border-top: 3px solid rgb(var(--rs-accent));
+}
+.ss-game.medal-bronze .ss-game-kicker { color: rgb(var(--rs-accent)); font-weight: 700; }
+
+/* Day-separator card inside the games strip */
+.ss-day-card {
+  flex-shrink: 0;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 1rem;
+  border-left: 2px solid rgb(var(--rs-primary));
+  scroll-snap-align: start;
+}
+.ss-day-name {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+  color: rgb(var(--rs-on-surface));
+  text-transform: uppercase;
+}
+.ss-day-date {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: rgb(var(--rs-primary));
+  margin-top: 0.35rem;
+  text-transform: uppercase;
+}
+
+/* ============================================================================
+   Venue + fundraiser cards (strip-aligned)
+   ============================================================================ */
+.ss-card {
+  width: 320px;
+  background-color: rgb(var(--rs-surface-elevated));
+  border: 1px solid rgb(var(--rs-hairline) / 0.4);
+  border-top: 3px solid rgb(var(--rs-primary));
+  padding: 1.5rem;
+  transition: border-color 200ms;
+}
+@media (min-width: 768px) {
+  .ss-card { width: 360px; }
+}
+.ss-card:hover { border-color: rgb(var(--rs-primary) / 0.7); }
+.ss-card-kicker {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-primary));
+  margin-bottom: 0.6rem;
+}
+.ss-card-title {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface));
+  margin-bottom: 0.6rem;
+}
+.ss-card-body {
+  font-family: var(--rs-font-body);
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgb(var(--rs-on-surface-muted));
+}
+
+/* ============================================================================
+   Live status pill — DROPS FEB 6 / PUCK-DROP COUNTDOWN
+   ============================================================================ */
+.ss-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgb(var(--rs-primary) / 0.5);
+  background-color: rgb(var(--rs-primary) / 0.10);
+  color: rgb(var(--rs-primary));
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.ss-status-pill::before {
+  content: "";
+  width: 7px; height: 7px;
+  background-color: rgb(var(--rs-primary));
+}
+
+/* ============================================================================
+   Whole-card link wrapper
+   ============================================================================ */
+.ss-link { display: block; text-decoration: none; }

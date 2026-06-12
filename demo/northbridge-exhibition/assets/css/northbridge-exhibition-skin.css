@@ -1,0 +1,46 @@
+/* Northbridge Exhibition — skin
+   WhiteEdition design pack → --rs-* token overrides.
+   Loads AFTER rinkscore-theme.css via tournament.yaml > skin_css. */
+
+:root {
+  /* Brand — cool monochrome with blue accent */
+  --rs-primary:            93  95  95;   /* #5d5f5f */
+  --rs-primary-strong:     45  49  51;   /* #2d3133 (inverse-surface) */
+  --rs-on-primary:        255 255 255;
+  --rs-secondary:          78  96 115;   /* #4e6073 */
+  --rs-on-secondary:      255 255 255;
+  --rs-accent:              0  99 151;   /* #006397 — tertiary blue */
+  --rs-on-accent:         255 255 255;
+
+  /* Surfaces — paper-white tonal stack */
+  --rs-surface:           247 249 251;   /* #f7f9fb */
+  --rs-surface-sunken:    242 244 246;   /* #f2f4f6 */
+  --rs-surface-elevated:  255 255 255;
+  --rs-surface-overlay:   236 238 240;   /* #eceef0 */
+  --rs-on-surface:         25  28  30;   /* #191c1e */
+  --rs-on-surface-muted:   68  71  72;   /* #444748 */
+
+  /* Soft accents */
+  --rs-secondary-soft:    207 226 249;   /* #cfe2f9 */
+  --rs-accent-soft:       224 227 229;   /* #e0e3e5 */
+  --rs-tag-bg:            236 238 240;
+  --rs-tag-text:           68  71  72;
+
+  /* Hairlines — refined cool grey */
+  --rs-hairline:          196 199 200;   /* #c4c7c8 */
+  --rs-hairline-strong:   116 120 120;   /* #747878 */
+
+  /* Status */
+  --rs-danger:            186  26  26;   /* #ba1a1a */
+  --rs-on-danger:         255 255 255;
+
+  /* Medal tints — warmer than the cool page palette, for visual moment */
+  --rs-medal-gold-soft:   249 230 184;
+  --rs-medal-silver-soft: 226 232 240;
+  --rs-medal-bronze-soft: 240 217 195;
+
+  /* Fonts — Inter for body/label + Playfair Display for headlines (wedding-stationery serif) */
+  --rs-font-headline: "Playfair Display", ui-serif, Georgia, serif;
+  --rs-font-body:     "Inter", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-label:    "Inter", ui-sans-serif, system-ui, sans-serif;
+}

@@ -1,0 +1,294 @@
+/* ============================================================================
+   big-city-faceoff — ApexIce skin (Material 3 → --rs-* tokens).
+   Loaded after rinkscore-theme.css. Space-separated RGB triplets (no commas)
+   so Tailwind's rgb(var(--rs-x) / <alpha-value>) resolves cleanly.
+   ============================================================================ */
+
+:root {
+  /* Brand — ice-blue primary, sharp-orange secondary, amber tertiary (Apex Ice palette) */
+  --rs-primary:            146 204 255;   /* #92ccff ice-blue */
+  --rs-on-primary:         0 51 81;       /* #003351 deep navy */
+  --rs-primary-strong:     52 152 219;    /* #3498db richer blue (primary-container) */
+  --rs-secondary:          255 183 131;   /* #ffb783 warm peach (sharp-orange family) */
+  --rs-on-secondary:       79 37 0;       /* #4f2500 dark brown */
+  --rs-accent:             255 186 75;    /* #ffba4b amber tertiary */
+  --rs-on-accent:          68 43 0;       /* #442b00 dark brown */
+
+  /* Surfaces — dark obsidian stack (Apex Ice surface family) */
+  --rs-surface:            19 19 22;      /* #131316 obsidian background */
+  --rs-surface-sunken:     14 14 17;      /* #0e0e11 deepest sunken */
+  --rs-surface-elevated:   53 52 56;      /* #353438 surface-container-highest */
+  --rs-surface-overlay:    31 31 34;      /* #1f1f22 surface-container */
+  --rs-on-surface:         228 225 229;   /* #e4e1e5 near-white */
+  --rs-on-surface-muted:   191 199 210;   /* #bfc7d2 cool gray */
+
+  /* Soft accents */
+  --rs-secondary-soft:     69 31 0;       /* #451f00 deep amber underlay */
+  --rs-accent-soft:        53 52 56;      /* #353438 surface-variant */
+  --rs-tag-bg:             42 42 45;      /* #2a2a2d surface-container-high */
+  --rs-tag-text:           191 199 210;   /* #bfc7d2 cool gray */
+
+  /* Hairlines */
+  --rs-hairline:           63 72 80;      /* #3f4850 outline-variant */
+  --rs-hairline-strong:    137 146 155;   /* #89929b outline */
+
+  /* Status */
+  --rs-danger:             255 180 171;   /* #ffb4ab on-dark error */
+  --rs-on-danger:          105 0 5;       /* #690005 deep red */
+
+  /* Typography — Apex Ice scoreboard logic: Oswald display, Inter body, JetBrains Mono labels */
+  --rs-font-headline:      "Oswald", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-body:          "Inter",  ui-sans-serif, system-ui, sans-serif;
+  --rs-font-label:         "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+/* ============================================================================
+   Per-tournament treatments (broadcast-dark style pack expressed through the
+   skin layer — palette + fonts come from --rs-* above; these are visual
+   nuances that don't fit into custom-property values alone).
+   ============================================================================ */
+
+/* Mandatory uppercase for headlines per Apex Ice "Scoreboard Logic" mood */
+.rs-display,
+.rs-headline { text-transform: uppercase; }
+
+/* Subtle grid-lines motif — diagonal scoreboard sheen on the page background */
+body {
+  background-image:
+    linear-gradient(rgb(var(--rs-hairline) / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--rs-hairline) / 0.06) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px;
+  background-attachment: fixed;
+}
+
+/* Hero electric-blue glow at the top edge */
+.bcf-hero-glow {
+  background:
+    radial-gradient(60% 60% at 50% 0%, rgb(var(--rs-primary) / 0.18) 0%, transparent 70%);
+}
+
+/* Championship feature card — electric-blue backlight */
+.bcf-championship-glow {
+  box-shadow:
+    0 0 0 1px rgb(var(--rs-primary) / 0.4),
+    0 0 24px rgb(var(--rs-primary) / 0.18) inset,
+    0 0 36px rgb(var(--rs-primary) / 0.12);
+}
+
+/* Pool chip — JetBrains Mono uppercase, hairline outline */
+.bcf-chip-pool {
+  font-family: var(--rs-font-label);
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-primary));
+  border: 1px solid rgb(var(--rs-primary) / 0.4);
+  padding: 0.25rem 0.5rem;
+}
+
+/* Pool A vs Pool B accent badge (pool A → ice-blue, pool B → sharp-orange) */
+.bcf-pool-a { color: rgb(var(--rs-primary)); border-color: rgb(var(--rs-primary) / 0.5); }
+.bcf-pool-b { color: rgb(var(--rs-secondary)); border-color: rgb(var(--rs-secondary) / 0.5); }
+
+/* Pool-color text helpers — appear AFTER .bcf-eyebrow so they win source order
+   (same specificity, later rule wins) when applied to eyebrow headers like
+   the standings-table pool-section titles. */
+.bcf-pool-color-a { color: rgb(var(--rs-primary)); }
+.bcf-pool-color-b { color: rgb(var(--rs-secondary)); }
+
+/* Animated live-pulse for in-tournament indicators (decorative; unused at scaffold) */
+@keyframes bcf-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+.bcf-live-dot {
+  display: inline-block;
+  width: 0.5rem; height: 0.5rem;
+  border-radius: 9999px;
+  background: rgb(var(--rs-secondary));
+  animation: bcf-pulse 1.4s ease-in-out infinite;
+}
+
+/* Eyebrow numbering treatment (00 · TEAMS) for the section-header pattern */
+.bcf-eyebrow {
+  font-family: var(--rs-font-label);
+  font-weight: 600;
+  font-size: 0.8125rem;            /* 13px — meta-text accessibility floor */
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface-muted));
+}
+.bcf-eyebrow-num {
+  color: rgb(var(--rs-primary));
+  margin-right: 0.4rem;
+}
+
+/* Accessibility compliance floors — loaded after the compiled bundle, so
+   these win the cascade over Tailwind's text-xs / text-sm utilities via
+   compound-selector specificity. Meta text floor 13px; body text floor 16px. */
+.rs-label.text-xs   { font-size: 0.8125rem; }   /* 13px (was 12) */
+.rs-body.text-xs    { font-size: 1rem; }        /* 16px (was 12) */
+.rs-body.text-sm    { font-size: 1rem; }        /* 16px (was 14) */
+
+/* Hairline cards — broadcast-dark elevation (no shadows; just 1px outline) */
+.bcf-card {
+  background-color: rgb(var(--rs-surface-overlay));
+  border: 1px solid rgb(var(--rs-hairline) / 0.5);
+}
+.bcf-card-elevated {
+  background-color: rgb(var(--rs-surface-elevated));
+  border: 1px solid rgb(var(--rs-hairline-strong) / 0.4);
+}
+
+/* Game-card medal accent stripes (left border) */
+.bcf-game-card.medal-gold   { border-left: 3px solid rgb(var(--rs-medal-gold)); }
+.bcf-game-card.medal-bronze { border-left: 3px solid rgb(var(--rs-medal-bronze)); }
+.bcf-game-card.has-label    { border-left: 3px solid rgb(var(--rs-primary)); }
+
+/* ============================================================================
+   Leaflet map — dark-theme integration for the Teams Map section.
+   Scopes overrides to inside the bcf-card to avoid leaking to any future map.
+   ============================================================================ */
+
+.leaflet-container {
+  background: rgb(var(--rs-surface-sunken));
+  font-family: var(--rs-font-body);
+  cursor: grab;
+}
+.leaflet-container.leaflet-grab { cursor: grab; }
+.leaflet-container.leaflet-drag-target { cursor: grabbing; }
+
+/* Team-logo markers — round chip frame around the team PNG */
+.bcf-team-marker {
+  width: 76px;
+  height: 76px;
+  border-radius: 9999px;
+  background: rgb(var(--rs-surface-overlay));
+  border: 2px solid rgb(var(--rs-primary) / 0.7);
+  padding: 7px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+.bcf-team-marker img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+.bcf-team-marker:hover {
+  transform: scale(1.06);
+}
+
+/* Pool-specific marker borders — Pool A = ice-blue (primary), Pool B = sharp-orange (secondary).
+   Matches the per-pool color scheme used on team-card chips (bcf-pool-a/-b). */
+.bcf-team-marker.pool-a-marker {
+  border-color: rgb(var(--rs-primary) / 0.75);
+}
+.bcf-team-marker.pool-a-marker:hover {
+  border-color: rgb(var(--rs-primary));
+  box-shadow: 0 4px 18px rgb(var(--rs-primary) / 0.55);
+}
+.bcf-team-marker.pool-b-marker {
+  border-color: rgb(var(--rs-secondary) / 0.75);
+}
+.bcf-team-marker.pool-b-marker:hover {
+  border-color: rgb(var(--rs-secondary));
+  box-shadow: 0 4px 18px rgb(var(--rs-secondary) / 0.55);
+}
+
+/* Popup chrome — LIGHT card on the dark map for max text legibility. */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #FFFFFF;                                  /* ice-white card on dark map */
+  color: #0B0B0D;                                       /* puck-black text */
+  border-radius: 0;
+  border: 2px solid #006397;                            /* deep electric-blue ring */
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+}
+.leaflet-popup-content {
+  margin: 14px 16px;
+  font-family: var(--rs-font-body);
+  font-size: 14px;
+  color: #0B0B0D;
+  line-height: 1.55;
+  max-width: 260px;
+}
+.leaflet-popup-content .bcf-popup-name {
+  font-family: var(--rs-font-headline);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+  color: #0B0B0D;                                       /* puck-black on white */
+  line-height: 1.15;
+}
+.leaflet-popup-content .bcf-popup-hometown {
+  font-family: var(--rs-font-label);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #006397;                                       /* deep ice-blue — pops on white, on-brand */
+  margin-bottom: 10px;
+}
+.leaflet-popup-content .bcf-popup-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1A1A1A;                                       /* near-black soft (easier on eyes than pure #000) */
+}
+.leaflet-popup-close-button {
+  color: #0B0B0D !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  width: 26px !important;
+  height: 26px !important;
+  line-height: 26px !important;
+  padding: 0 !important;
+  top: 6px !important;
+  right: 6px !important;
+  text-align: center !important;
+}
+.leaflet-popup-close-button:hover {
+  color: #FF8C00 !important;                            /* sharp-orange hover */
+}
+.leaflet-popup-content .bcf-popup-name {
+  padding-right: 32px;                                  /* clearance so the team name doesn't run under the close × */
+}
+
+/* Attribution + zoom controls — softer in the dark theme */
+.leaflet-control-attribution {
+  background: rgb(var(--rs-surface-sunken) / 0.85) !important;
+  color: rgb(var(--rs-on-surface-muted)) !important;
+  font-size: 10px !important;
+}
+.leaflet-control-attribution a {
+  color: rgb(var(--rs-primary)) !important;
+}
+.leaflet-bar {
+  border: 1px solid rgb(var(--rs-hairline) / 0.5) !important;
+  background: rgb(var(--rs-surface-elevated)) !important;
+}
+.leaflet-bar a {
+  background: rgb(var(--rs-surface-elevated)) !important;
+  color: rgb(var(--rs-on-surface)) !important;
+  border-bottom-color: rgb(var(--rs-hairline) / 0.5) !important;
+}
+.leaflet-bar a:hover {
+  background: rgb(var(--rs-surface-overlay)) !important;
+}
+
+/* Override gem medal-row tints for a DARK theme. The gem's vendored CSS uses
+   `--rs-medal-*-soft` at 60% alpha — fine over a LIGHT surface (slate-50)
+   but they read as bright pale fills on ApexIce's obsidian, washing out the
+   white game-cell text to ~1.2:1 contrast (audit round 2). Re-tint with the
+   saturated medal color at 12% over the dark surface — kept warm/recognizable
+   but contrast with on-surface text stays ≥ 4.5:1. */
+.rs-game-row.medal-gold {
+  background-color: rgb(var(--rs-medal-gold) / 0.12);
+}
+.rs-game-row.medal-bronze {
+  background-color: rgb(var(--rs-medal-bronze) / 0.18);
+}

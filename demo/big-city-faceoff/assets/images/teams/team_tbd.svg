@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="TBD">
+  <!-- Dashed circle outline in ice-blue (--rs-primary), transparent fill -->
+  <circle cx="128" cy="128" r="116" fill="none" stroke="rgb(146 204 255)" stroke-width="3" stroke-dasharray="10 8" opacity="0.7"/>
+  <!-- Inner solid circle, subtle -->
+  <circle cx="128" cy="128" r="92" fill="rgb(146 204 255)" opacity="0.06"/>
+  <!-- TBD text, Oswald-style condensed sans-serif (system fallback if Oswald not present) -->
+  <text x="128" y="148" text-anchor="middle"
+        font-family="'Oswald', 'Arial Narrow', 'Arial', sans-serif"
+        font-size="64" font-weight="700"
+        fill="rgb(146 204 255)" opacity="0.85"
+        letter-spacing="3">TBD</text>
+</svg>

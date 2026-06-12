@@ -1,0 +1,300 @@
+/* ============================================================================
+   arctic-circuit skin — CyberFrost (Energy category)
+   Material 3 → --rs-* token map. Loaded AFTER the compiled bundle.
+   ============================================================================ */
+:root {
+  /* CyberFrost palette — obsidian + glass + neon magenta + vivid purple */
+  --rs-primary:           255   0 255;  /* #FF00FF magenta — the "glitch" accent */
+  --rs-primary-strong:    169   0 169;  /* #A900A9 inverse-primary */
+  --rs-on-primary:         91   0  91;  /* #5B005B */
+  --rs-secondary:         157   5 255;  /* #9D05FF vivid purple */
+  --rs-on-secondary:      247 230 255;  /* #F7E6FF */
+  --rs-accent:            255 171 243;  /* #FFABF3 primary-fixed-dim — bright magenta tint */
+  --rs-on-accent:          56   0  56;  /* #380038 */
+
+  /* Surfaces — obsidian stack */
+  --rs-surface:            17  19  24;  /* #111318 background */
+  --rs-surface-sunken:     12  14  18;  /* #0C0E12 surface-container-lowest */
+  --rs-surface-elevated:   30  32  36;  /* #1E2024 surface-container */
+  --rs-surface-overlay:    40  42  46;  /* #282A2E surface-container-high */
+  --rs-on-surface:        226 226 232;  /* #E2E2E8 on-surface */
+  --rs-on-surface-muted:  164 137 157;  /* #A4899D outline (muted ash-mauve) */
+
+  /* Soft accents — translucent magenta family */
+  --rs-secondary-soft:    223 183 255;  /* #DFB7FF secondary */
+  --rs-accent-soft:        86  64  82;  /* #564052 outline-variant */
+  --rs-tag-bg:             51  53  57;  /* #333539 surface-container-highest */
+  --rs-tag-text:          220 190 212;  /* #DCBED4 on-surface-variant */
+
+  /* Hairlines — silver-mauve over obsidian */
+  --rs-hairline:           86  64  82;  /* #564052 outline-variant */
+  --rs-hairline-strong:   164 137 157;  /* #A4899D outline */
+
+  /* Status */
+  --rs-danger:            255 180 171;  /* #FFB4AB */
+  --rs-on-danger:         105   0   5;  /* #690005 */
+
+  /* Medal tints — re-tuned for dark CyberFrost surface so they READ on obsidian */
+  --rs-medal-gold:        255 215  64;  /* warmer gold on dark */
+  --rs-medal-gold-soft:   120  90  20;  /* darker tint band */
+  --rs-medal-silver:      210 220 230;
+  --rs-medal-silver-soft:  90  98 110;
+  --rs-medal-bronze:      210 130  60;
+  --rs-medal-bronze-soft: 110  60  25;
+
+  /* Typography — Space Grotesk (headline) + JetBrains Mono (body, label) */
+  --rs-font-headline:     "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-body:         "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --rs-font-label:        "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ----------------------------------------------------------------------------
+   CyberFrost surface — fixed obsidian + subtle grid-line motif backdrop.
+   The grid-lines suggest the "circuit" metaphor at the page level.
+   ---------------------------------------------------------------------------- */
+body {
+  background-color: rgb(var(--rs-surface));
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center top;
+}
+
+/* ----------------------------------------------------------------------------
+   Glass-tile primitive — the bento tile.
+   SHARP corners (0px). 1px silver hairline. Backdrop blur. Magenta hover state.
+   ---------------------------------------------------------------------------- */
+.ac-tile {
+  position: relative;
+  background-color: rgb(30 32 36 / 0.55);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 1.5rem;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+@media (min-width: 768px) {
+  .ac-tile { padding: 2rem; }
+}
+.ac-tile-hover {
+  cursor: pointer;
+}
+.ac-tile-hover:hover {
+  border-color: rgb(var(--rs-primary) / 0.7);
+  box-shadow: inset 0 0 0 1px rgb(var(--rs-primary) / 0.35);
+}
+
+/* Section-number kicker — top-left corner of each tile/section */
+.ac-sec-num {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: rgb(var(--rs-primary));
+  text-transform: uppercase;
+}
+.ac-sec-title {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-size: 24px;
+  line-height: 32px;
+  color: rgb(var(--rs-on-surface));
+}
+@media (min-width: 768px) {
+  .ac-sec-title { font-size: 32px; line-height: 40px; }
+}
+
+/* ----------------------------------------------------------------------------
+   Bento grid — desktop = 12-col, mobile = 1-col. Skin CSS class per the v3
+   "skin-CSS-class pattern for multi-track grids" rule (no Tailwind JIT trap).
+   ---------------------------------------------------------------------------- */
+.ac-bento {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .ac-bento {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* spans */
+.ac-col-4  { grid-column: span 1; }
+.ac-col-5  { grid-column: span 1; }
+.ac-col-6  { grid-column: span 1; }
+.ac-col-7  { grid-column: span 1; }
+.ac-col-8  { grid-column: span 1; }
+.ac-col-12 { grid-column: span 1; }
+@media (min-width: 768px) {
+  .ac-col-4  { grid-column: span 4; }
+  .ac-col-5  { grid-column: span 5; }
+  .ac-col-6  { grid-column: span 6; }
+  .ac-col-7  { grid-column: span 7; }
+  .ac-col-8  { grid-column: span 8; }
+  .ac-col-12 { grid-column: span 12; }
+}
+
+/* ----------------------------------------------------------------------------
+   Games-row grid — 5-track (#NO · AWAY · SCORE · HOME · TIME)
+   Skin CSS class to dodge the JIT multi-token trap.
+   ---------------------------------------------------------------------------- */
+.ac-game-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 96px 1fr 64px;
+  column-gap: 0.5rem;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  border-top: 1px solid rgb(255 255 255 / 0.05);
+}
+@media (min-width: 768px) {
+  .ac-game-row {
+    grid-template-columns: 56px 1fr 120px 1fr 80px;
+    column-gap: 1rem;
+    padding: 0.85rem 1rem;
+  }
+}
+.ac-game-row:first-child { border-top: none; }
+
+/* Standings grid — 7 cols: rank · team · gp · w · t · l · pts
+   (GD dropped — not enough room when the tile sits beside the champion-recap
+   on a 12-col bento, then splits again into Pool A / Pool B. Tiebreaker note
+   below the table still cites GD as a tiebreaker so the math is auditable.) */
+.ac-stand-row {
+  display: grid;
+  grid-template-columns: 32px 1fr 28px 28px 28px 28px 48px;
+  column-gap: 4px;
+  align-items: center;
+  padding: 0.55rem 0.5rem;
+  border-top: 1px solid rgb(255 255 255 / 0.05);
+}
+@media (min-width: 768px) {
+  .ac-stand-row {
+    grid-template-columns: 40px 1fr 32px 32px 32px 32px 56px;
+    column-gap: 8px;
+  }
+}
+.ac-stand-row.ac-stand-header { border-top: none; padding-top: 0; padding-bottom: 0.5rem; }
+.ac-stand-row.ac-stand-rank-1 {
+  background-color: rgb(var(--rs-primary) / 0.10);
+  box-shadow: inset 3px 0 0 0 rgb(var(--rs-primary));
+}
+
+/* Rank-letter labels — gold/silver/bronze on podium teams */
+.ac-rank-letter {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ac-rank-letter.gold   { color: rgb(255 215 64); }
+.ac-rank-letter.silver { color: rgb(210 220 230); }
+.ac-rank-letter.bronze { color: rgb(210 130 60); }
+.ac-rank-letter.fourth, .ac-rank-letter.fifth, .ac-rank-letter.sixth { color: rgb(var(--rs-on-surface-muted)); }
+
+/* Pool-color badges */
+.ac-pool-a { color: rgb(var(--rs-primary)); }
+.ac-pool-b { color: rgb(var(--rs-secondary-soft)); }
+
+/* Game-num kicker (mono, primary tint) */
+.ac-game-num {
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgb(var(--rs-primary));
+  text-align: center;
+}
+
+/* Score chip — central column on each game row */
+.ac-score-chip {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  background-color: rgb(0 0 0 / 0.25);
+  color: rgb(var(--rs-on-surface));
+}
+.ac-game-row.medal-gold .ac-score-chip   { border-color: rgb(255 215 64 / 0.5); color: rgb(255 215 64); }
+.ac-game-row.medal-bronze .ac-score-chip { border-color: rgb(210 130 60 / 0.5); color: rgb(210 130 60); }
+.ac-game-row.has-label .ac-game-label {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgb(var(--rs-primary));
+  text-transform: uppercase;
+}
+
+/* Podium tile — top-of-page reveal */
+.ac-podium-cell {
+  text-align: center;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  padding: 1.5rem 1rem;
+  background-color: rgb(0 0 0 / 0.25);
+  position: relative;
+}
+.ac-podium-cell.gold   { border-top: 3px solid rgb(255 215 64); }
+.ac-podium-cell.silver { border-top: 3px solid rgb(210 220 230); }
+.ac-podium-cell.bronze { border-top: 3px solid rgb(210 130 60); }
+
+/* Stat-band metric */
+.ac-stat-num {
+  font-family: var(--rs-font-headline);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-size: 40px;
+  color: rgb(var(--rs-on-surface));
+}
+@media (min-width: 768px) {
+  .ac-stat-num { font-size: 56px; }
+}
+.ac-stat-label {
+  font-family: var(--rs-font-label);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--rs-on-surface-muted));
+  margin-top: 0.25rem;
+}
+
+/* Teams map container — neon ring around markers */
+.ac-team-marker {
+  border: 2px solid rgb(var(--rs-primary));
+  background-color: rgb(255 255 255 / 0.95);
+  border-radius: 9999px;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 3px rgb(var(--rs-primary) / 0.25);
+}
+.ac-team-marker.pool-b { border-color: rgb(var(--rs-secondary-soft)); box-shadow: 0 0 0 3px rgb(var(--rs-secondary-soft) / 0.25); }
+.ac-team-marker img { width: 28px; height: 28px; object-fit: contain; }
+
+/* Glow ring around the live tournament-complete pill */
+.ac-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgb(var(--rs-primary) / 0.5);
+  background-color: rgb(var(--rs-primary) / 0.10);
+  color: rgb(var(--rs-primary));
+  font-family: var(--rs-font-label);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ac-status-pill::before {
+  content: "";
+  width: 7px; height: 7px;
+  background-color: rgb(var(--rs-primary));
+  box-shadow: 0 0 8px rgb(var(--rs-primary));
+}
+
+/* Whole-card hover treatment (for clickable tiles per feedback_no_cta_text_prompts) */
+.ac-link-card { display: block; text-decoration: none; }
+.ac-link-card:hover .ac-tile { border-color: rgb(var(--rs-primary) / 0.55); }

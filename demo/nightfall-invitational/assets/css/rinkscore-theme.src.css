@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --------------------------------------------------------------------------
+   Canonical design tokens (CSS custom properties)
+   --------------------------------------------------------------------------
+   These default values mirror _sass/rinkscore-theme/_tokens.scss. They are
+   the gem's CANONICAL token set — role-based names that any incoming theme
+   (Stitch DESIGN.md, Canva, hand-authored) is translated INTO, never copied
+   from. Per-tournament themes override the values inside :root via a skin
+   CSS file (loaded after this stylesheet in _includes/head.html).
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Brand — NEUTRAL gem defaults (Tailwind slate family). Every tournament
+     opts in to its own palette by shipping a skin CSS file referenced via
+     site.data.tournament.skin_css (loads after this stylesheet). */
+  --rs-primary:           71 85 105;      /* #475569 slate-600 */
+  --rs-primary-strong:    51 65 85;       /* #334155 slate-700 */
+  --rs-on-primary:        255 255 255;
+  --rs-secondary:         100 116 139;    /* #64748b slate-500 */
+  --rs-on-secondary:      255 255 255;
+  --rs-accent:            148 163 184;    /* #94a3b8 slate-400 */
+  --rs-on-accent:         15 23 42;       /* #0f172a slate-900 */
+
+  /* Surfaces — tonal stack */
+  --rs-surface:           248 250 252;    /* #f8fafc slate-50 */
+  --rs-surface-sunken:    241 245 249;    /* #f1f5f9 slate-100 */
+  --rs-surface-elevated:  255 255 255;    /* #ffffff */
+  --rs-surface-overlay:   226 232 240;    /* #e2e8f0 slate-200 */
+  --rs-on-surface:        15 23 42;       /* #0f172a slate-900 — never pure #000 */
+  --rs-on-surface-muted:  71 85 105;      /* #475569 slate-600 */
+
+  /* Soft accents */
+  --rs-secondary-soft:    203 213 225;    /* #cbd5e1 slate-300 */
+  --rs-accent-soft:       226 232 240;    /* #e2e8f0 slate-200 */
+  --rs-tag-bg:            226 232 240;    /* #e2e8f0 — chip bg */
+  --rs-tag-text:          51 65 85;       /* #334155 slate-700 */
+
+  /* Hairlines (use sparingly — no-line rule prefers tonal shifts) */
+  --rs-hairline:          203 213 225;    /* #cbd5e1 slate-300 */
+  --rs-hairline-strong:   148 163 184;    /* #94a3b8 slate-400 */
+
+  /* Status */
+  --rs-danger:            220 38 38;      /* #dc2626 red-600 */
+  --rs-on-danger:         255 255 255;
+
+  /* Medal tints — used for game-row highlights and podium chips on the
+     teams section when tournament.winners is set. */
+  --rs-medal-gold:        202 138 4;      /* #ca8a04 amber-600 */
+  --rs-medal-gold-soft:   254 249 195;    /* #fef9c3 amber-100 */
+  --rs-medal-silver:      100 116 139;    /* #64748b slate-500 */
+  --rs-medal-silver-soft: 226 232 240;    /* #e2e8f0 slate-200 */
+  --rs-medal-bronze:      154 52 18;      /* #9a3412 orange-800 */
+  --rs-medal-bronze-soft: 254 215 170;    /* #fed7aa orange-200 */
+
+  /* Typography — resolved via Tailwind fontFamily(var(...)) so themes can
+     swap fonts in their skin CSS without recompiling the gem. */
+  --rs-font-headline:     "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --rs-font-body:         "Inter",   ui-sans-serif, system-ui, sans-serif;
+  --rs-font-label:        "Manrope", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   Custom utilities (small surface area; rest comes from Tailwind)
+   -------------------------------------------------------------------------- */
+
+@layer utilities {
+  .rs-glass {
+    background-color: rgb(var(--rs-surface) / 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .rs-ambient-shadow {
+    box-shadow: 0 24px 48px rgba(24, 27, 37, 0.06);
+  }
+
+  .rs-brand-gradient {
+    background-image: linear-gradient(135deg, rgb(var(--rs-primary)) 0%, rgb(var(--rs-primary-strong)) 100%);
+  }
+
+  .rs-skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 1rem;
+    background: rgb(var(--rs-surface-elevated));
+    color: rgb(var(--rs-on-surface));
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    z-index: 100;
+  }
+  .rs-skip-link:focus { left: 1rem; }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: theme('fontFamily.body');
+    background-color: rgb(var(--rs-surface));
+    color: rgb(var(--rs-on-surface));
+    line-height: 1.6;
+  }
+  ::selection {
+    background-color: rgb(var(--rs-secondary-soft) / 0.4);
+    color: rgb(var(--rs-on-surface));
+  }
+}

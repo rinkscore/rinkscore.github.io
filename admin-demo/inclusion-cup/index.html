@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toronto Inclusion Cup — admin (demo)</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 1024px; margin: 0 auto; padding: 16px 24px 96px; color: #1a1a1a; }
+  h1 { margin: 8px 0; font-size: 20px; }
+  .sub { color: #666; font-size: 13px; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  th, td { border-bottom: 1px solid #eee; padding: 8px 6px; text-align: left; font-size: 14px; }
+  th { background: #fafafa; font-weight: 600; color: #555; }
+  .score { width: 60px; text-align: center; font-size: 16px; padding: 6px; border: 1px solid #ccc; border-radius: 4px; }
+  .score.dirty { border-color: #d97706; background: #fff7ed; }
+  .vs { color: #999; font-size: 12px; padding: 0 4px; }
+  .game-num { color: #888; font-size: 12px; white-space: nowrap; padding-right: 12px; }
+  .game-time { display: block; color: #aaa; font-size: 11px; font-weight: normal; margin-top: 2px; }
+  #games tr.played .team-name, #games tr.played .game-num { color: #aaa; }
+  #games tr.played .game-time { color: #ccc; }
+  #games tr.played { background: #fcfcfc; }
+  /* Auto-fill placeholder rows (medal games before round-robin closes) */
+  #games tr.auto-fill { background: #fffbeb; }
+  #games tr.auto-fill .team-name { font-style: italic; color: #92400e; font-weight: 500; }
+  #games tr.auto-fill .score { background: #fef3c7; color: #92400e; cursor: not-allowed; }
+  #games tr.auto-fill .auto-note { display: block; color: #b45309; font-size: 11px; font-style: italic; margin-top: 2px; }
+  /* Game type column — mirrors Add-game "Type" dropdown values */
+  .game-type { font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .game-type-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .game-type-pill.regular { background: #f1f5f9; color: #475569; }
+  .game-type-pill.bronze  { background: #fed7aa; color: #9a3412; }
+  .game-type-pill.gold    { background: #fef9c3; color: #92400e; }
+  .game-type-pill.custom  { background: #dbeafe; color: #1e40af; }
+  @media (max-width: 599px) {
+    #games, #games tbody, #games tr, #games td { display: block; width: 100%; }
+    #games thead { display: none; }
+    #games tr { border-bottom: 1px solid #ddd; padding: 10px 4px; }
+    #games tr:last-child { border-bottom: none; }
+    #games td { border: none; padding: 4px 0; }
+    #games td.vs { display: none; }
+    #games td.game-num { color: #555; font-size: 13px; font-weight: 600; padding-bottom: 6px; padding-right: 0; }
+    #games td.team-cell { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    #games td .team-name { flex: 1; }
+    .add input, .add select { display: block; width: 100%; margin: 0 0 8px; }
+    .add input[hidden], .add select[hidden] { display: none; }
+    .add .vs { display: none; }
+    .add button { width: 100%; padding: 10px; font-size: 15px; }
+  }
+  .savebar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #ddd; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; box-shadow: 0 -2px 8px rgba(0,0,0,0.04); }
+  .savebar-right { display: flex; align-items: center; gap: 12px; }
+  #status { font-size: 13px; color: #666; }
+  .show-standings { display: inline-block; font-size: 14px; font-weight: 600; text-decoration: none; color: #2563eb; border: 1px solid #2563eb; padding: 8px 14px; border-radius: 6px; background: white; white-space: nowrap; transition: background 0.1s; }
+  .show-standings:hover { background: #eff6ff; }
+  #status.dirty { color: #d97706; }
+  #status.saved { color: #059669; }
+  #status.error { color: #dc2626; }
+  #saveBtn { padding: 10px 20px; font-size: 15px; font-weight: 600; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; }
+  #saveBtn:disabled { background: #94a3b8; cursor: not-allowed; }
+  .empty { color: #888; padding: 24px 0; text-align: center; font-style: italic; }
+  .add { margin-top: 24px; padding: 16px; border: 1px dashed #ccc; border-radius: 6px; }
+  .add h3 { margin: 0 0 10px; font-size: 13px; color: #666; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+  .add input, .add select { padding: 6px; font-size: 14px; margin-right: 6px; border: 1px solid #ccc; border-radius: 4px; }
+  .add button { padding: 6px 12px; background: #475569; color: white; border: none; border-radius: 4px; cursor: pointer; }
+  .add .time-shortcut { padding: 4px 10px; font-size: 12px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; font-weight: 500; }
+  .add .time-shortcut:hover { background: #e2e8f0; }
+  .edit-link { margin-left: 8px; font-size: 11px; color: #2563eb; cursor: pointer; text-decoration: underline; font-weight: 400; }
+  .edit-link:hover { color: #1d4ed8; }
+  dialog#editDialog { border: none; border-radius: 12px; padding: 0; max-width: 420px; width: calc(100% - 32px); max-height: 90vh; overflow: auto; box-shadow: 0 16px 48px rgba(0,0,0,0.25); position: relative; }
+  dialog#editDialog::backdrop { background: rgba(0,0,0,0.5); }
+  dialog#editDialog h3 { margin: 0; padding: 20px 24px 12px; font-size: 18px; }
+  .edit-row { padding: 8px 24px; }
+  .edit-row label { display: block; font-size: 12px; color: #666; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .edit-row input, .edit-row select { width: 100%; padding: 8px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; }
+  .edit-actions { display: flex; gap: 8px; justify-content: flex-end; padding: 16px 24px 20px; }
+  .edit-actions button { padding: 8px 16px; font-size: 14px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+  #editCancel { background: white; border: 1px solid #ccc; color: #555; }
+  #editApply { background: #2563eb; border: 1px solid #2563eb; color: white; }
+  .dialog-close { position: absolute; top: 8px; right: 8px; background: none; border: none; font-size: 24px; cursor: pointer; color: #888; line-height: 1; padding: 4px 10px; border-radius: 4px; }
+  .dialog-close:hover { background: #f4f4f4; color: #333; }
+  a { color: #2563eb; }
+  /* ----- demo-only ribbon ----- */
+  .demo-ribbon { background: #fff7ed; border: 1px solid #fdba74; color: #9a3412; padding: 10px 12px; border-radius: 6px; font-size: 13px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .demo-ribbon strong { color: #c2410c; }
+  .demo-ribbon button { background: white; border: 1px solid #fdba74; color: #9a3412; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .demo-ribbon button:hover { background: #fed7aa; }
+</style>
+</head>
+<body>
+
+<div class="demo-ribbon">
+  <span><strong>DEMO</strong> &mdash; this is the RinkScore admin console wired to the <a href="https://rinkscore.ca/demo/inclusion-cup/" target="_blank" rel="noopener">Inclusion Cup demo</a>. Nothing is saved. Edit scores, click Save, watch the flow.</span>
+  <button type="button" id="resetBtn">Reset demo</button>
+</div>
+
+<h1>Toronto Inclusion Cup · admin</h1>
+<div class="sub">Please update <strong>the final scores</strong> when each game ends &mdash; they&rsquo;ll automatically count in the standings. Thank you!</div>
+
+<table id="games">
+  <thead><tr><th>Game</th><th>Type</th><th>Away</th><th></th><th>Home</th></tr></thead>
+  <tbody><tr><td colspan="5" class="empty">Loading&hellip;</td></tr></tbody>
+</table>
+
+<div class="add">
+  <h3>Add game</h3>
+  <select id="addAway"><option value="">&mdash; Away team &mdash;</option></select>
+  <span class="vs">@</span>
+  <select id="addHome"><option value="">&mdash; Home team &mdash;</option></select>
+  <select id="addMedal">
+    <option value="">Regular</option>
+    <option value="gold">Gold Medal Game</option>
+    <option value="bronze">Bronze Medal Game</option>
+    <option value="custom">Custom&hellip;</option>
+  </select>
+  <input id="addLabel" placeholder="Game name (e.g. Semifinal A)" hidden>
+  <input id="addTime" type="datetime-local">
+  <button type="button" class="time-shortcut" data-mins="0">Now</button>
+  <select id="addVenue"><option value="">&mdash; Venue &mdash;</option></select>
+  <button id="addBtn">Add</button>
+</div>
+
+<dialog id="editDialog">
+  <button type="button" class="dialog-close" aria-label="Close">&times;</button>
+  <h3>Edit game</h3>
+  <div class="edit-row">
+    <label for="editAway">Away team</label>
+    <select id="editAway"></select>
+  </div>
+  <div class="edit-row">
+    <label for="editHome">Home team</label>
+    <select id="editHome"></select>
+  </div>
+  <div class="edit-row">
+    <label for="editLabel">Label</label>
+    <input type="text" id="editLabel" placeholder="e.g. Bronze Medal Game (empty = &lsquo;Game N&rsquo;)">
+  </div>
+  <div class="edit-row">
+    <label for="editTrack">Pool / track</label>
+    <select id="editTrack"><option value="">None (All tab only)</option></select>
+  </div>
+  <div class="edit-row">
+    <label for="editTime">Date &amp; time</label>
+    <input type="datetime-local" id="editTime">
+  </div>
+  <div class="edit-row">
+    <label for="editVenue">Venue</label>
+    <select id="editVenue"><option value="">&mdash; Venue &mdash;</option></select>
+  </div>
+  <div class="edit-actions">
+    <button type="button" id="editCancel">Cancel</button>
+    <button type="button" id="editApply">Apply</button>
+  </div>
+</dialog>
+
+<div class="savebar">
+  <a class="show-standings" href="https://rinkscore.ca/demo/inclusion-cup/#standings-section" target="_blank" rel="noopener">Standings</a>
+  <div class="savebar-right">
+    <span id="status" hidden></span>
+    <button id="saveBtn" disabled>Save</button>
+  </div>
+</div>
+
+<script>
+// ===========================================================================
+// DEMO admin — mirrors the production adminHTML SPA but with no network.
+// Initial state is a frozen snapshot of inclusion-cup's _data/games.json +
+// tournament.yaml. Save is simulated. Standings update happens on the
+// linked public site after Save (in production); here Save is a UI flow only.
+// ===========================================================================
+
+const INITIAL_GAMES = [
+  { away_team: "Hamilton Steelworks",   home_team: "Toronto Crescent",     start_time: "2026-03-06T17:30",                            away_goals: 2,    home_goals: 4,    played: true  },
+  { away_team: "Niagara Tideway",       home_team: "Mississauga Lakeshore",start_time: "2026-03-06T19:30",                            away_goals: 3,    home_goals: 3,    played: true  },
+  { away_team: "Toronto Crescent",      home_team: "Barrie Northwind",     start_time: "2026-03-07T09:00",                            away_goals: 5,    home_goals: 1,    played: true  },
+  { away_team: "Mississauga Lakeshore", home_team: "Hamilton Steelworks",  start_time: "2026-03-07T11:00",                            away_goals: 4,    home_goals: 2,    played: true  },
+  { away_team: "Barrie Northwind",      home_team: "Niagara Tideway",      start_time: "2026-03-07T14:00",                            away_goals: 1,    home_goals: 3,    played: true  },
+  { away_team: "Mississauga Lakeshore", home_team: "Toronto Crescent",     start_time: "2026-03-07T16:00",                            away_goals: 2,    home_goals: 3,    played: true  },
+  { away_team: "Niagara Tideway",       home_team: "Hamilton Steelworks",  start_time: "2026-03-08T09:00",                            away_goals: null, home_goals: null, played: false },
+  { away_team: "Barrie Northwind",      home_team: "Mississauga Lakeshore",start_time: "2026-03-08T11:00",                            away_goals: null, home_goals: null, played: false },
+  { away_team: "Niagara Tideway",       home_team: "Toronto Crescent",     start_time: "2026-03-08T13:00",                            away_goals: null, home_goals: null, played: false },
+  { away_team: "Barrie Northwind",      home_team: "Hamilton Steelworks",  start_time: "2026-03-08T15:00",                            away_goals: null, home_goals: null, played: false },
+  { away_team: "4th of round-robin",    home_team: "3rd of round-robin",   start_time: "2026-03-08T17:30",  medal: "bronze", label: "Bronze Medal Game", away_goals: null, home_goals: null, played: false, auto_fill: true },
+  { away_team: "2nd of round-robin",    home_team: "1st of round-robin",   start_time: "2026-03-08T19:30",  medal: "gold",   label: "Gold Medal Game",   away_goals: null, home_goals: null, played: false, auto_fill: true }
+];
+
+const TEAMS = [
+  { name: "Toronto Crescent",      track: null },
+  { name: "Hamilton Steelworks",   track: null },
+  { name: "Mississauga Lakeshore", track: null },
+  { name: "Niagara Tideway",       track: null },
+  { name: "Barrie Northwind",      track: null }
+];
+
+const TRACKS = [];  // single-track tournament
+
+const VENUES = [
+  { kind: "rink",          name: "Wallace Emerson Community Centre" },
+  { kind: "rink",          name: "Moss Park Arena" },
+  { kind: "accommodation", name: "Bond Place Hotel" }
+];
+
+let games = INITIAL_GAMES.map((g) => ({ ...g }));
+let dirty = false;
+let TEAM_TRACK = {};
+
+function sortGames() {
+  games.sort((a, b) => {
+    const ta = a.start_time ? new Date(a.start_time).getTime() : Infinity;
+    const tb = b.start_time ? new Date(b.start_time).getTime() : Infinity;
+    if (isNaN(ta)) return 1;
+    if (isNaN(tb)) return -1;
+    return ta - tb;
+  });
+}
+function fmtGameTime(iso) {
+  if (!iso) return 'TBD';
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return iso;
+  const day = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  const time = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  return day + ' · ' + time;
+}
+
+function setStatus(text, cls) {
+  const el = document.getElementById('status');
+  el.textContent = text;
+  el.className = cls || '';
+  el.hidden = false;
+  if (cls === 'saved') {
+    setTimeout(() => { if (el.className === 'saved') el.hidden = true; }, 5000);
+  }
+}
+function setDirty(d) {
+  dirty = d;
+  document.getElementById('saveBtn').disabled = !d;
+  if (d) setStatus('unsaved changes', 'dirty');
+}
+
+function loadTeams() {
+  TEAM_TRACK = {};
+  TEAMS.forEach(team => { if (team.track) TEAM_TRACK[team.name] = team.track; });
+
+  const venues = VENUES.filter(v => {
+    if (v.kind) return v.kind.toLowerCase() !== 'accommodation';
+    return (v.label || '').toLowerCase() !== 'accommodation';
+  });
+  const venueSel = document.getElementById('addVenue');
+  venues.forEach((v, i) => {
+    const opt = document.createElement('option');
+    opt.value = v.name;
+    opt.textContent = v.name;
+    if (i === 0) opt.selected = true;
+    venueSel.appendChild(opt);
+  });
+
+  function buildTeamOptions(sel, keepPlaceholder) {
+    const placeholder = keepPlaceholder ? sel.innerHTML : '';
+    sel.innerHTML = placeholder;
+    if (TRACKS.length > 0) {
+      TRACKS.forEach(trackName => {
+        const grp = document.createElement('optgroup');
+        grp.label = trackName;
+        TEAMS.filter(team => team.track === trackName).forEach(team => {
+          const opt = document.createElement('option');
+          opt.value = team.name;
+          opt.textContent = team.name;
+          grp.appendChild(opt);
+        });
+        if (grp.children.length) sel.appendChild(grp);
+      });
+      TEAMS.filter(team => !team.track).forEach(team => {
+        const opt = document.createElement('option');
+        opt.value = team.name;
+        opt.textContent = team.name;
+        sel.appendChild(opt);
+      });
+    } else {
+      TEAMS.forEach(team => {
+        const opt = document.createElement('option');
+        opt.value = team.name;
+        opt.textContent = team.name;
+        sel.appendChild(opt);
+      });
+    }
+  }
+  buildTeamOptions(document.getElementById('addAway'),  true);
+  buildTeamOptions(document.getElementById('addHome'),  true);
+  buildTeamOptions(document.getElementById('editAway'), false);
+  buildTeamOptions(document.getElementById('editHome'), false);
+
+  const trackSel = document.getElementById('editTrack');
+  const trackPlaceholder = trackSel.innerHTML;
+  trackSel.innerHTML = trackPlaceholder;
+  TRACKS.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    trackSel.appendChild(opt);
+  });
+}
+
+function gameTypePill(g) {
+  // Mirrors the "Add game" dropdown: Regular / Gold Medal / Bronze Medal / Custom.
+  if (g.medal === 'gold')   return { cls: 'gold',    text: 'Gold Medal' };
+  if (g.medal === 'bronze') return { cls: 'bronze',  text: 'Bronze Medal' };
+  if (g.label)              return { cls: 'custom',  text: 'Custom' };
+  return { cls: 'regular', text: 'Regular' };
+}
+
+function renderGames() {
+  const tb = document.querySelector('#games tbody');
+  tb.innerHTML = '';
+  if (games.length === 0) {
+    tb.innerHTML = '<tr><td colspan="5" class="empty">No games yet &mdash; add one below.</td></tr>';
+    return;
+  }
+  games.forEach((g, i) => {
+    const tr = document.createElement('tr');
+    if (g.played) tr.classList.add('played');
+    if (g.auto_fill) tr.classList.add('auto-fill');
+    const aw = Number(g.away_goals) || 0;
+    const hm = Number(g.home_goals) || 0;
+    const awayVal = (g.played || aw > 0) ? aw : '';
+    const homeVal = (g.played || hm > 0) ? hm : '';
+    const scoreDisabled = g.auto_fill ? ' disabled' : '';
+    const labelPrefix = g.label ? g.label : ('Game ' + (i + 1));
+    const autoNote = g.auto_fill
+      ? '<span class="auto-note">Teams auto-fill from the standings when round-robin closes.</span>'
+      : '';
+    const pill = gameTypePill(g);
+    tr.innerHTML =
+      '<td class="game-num">' + labelPrefix + ' <a class="edit-link" data-i="' + i + '">edit</a><span class="game-time">' + (g.track ? g.track + ' · ' : '') + fmtGameTime(g.start_time) + '</span>' + autoNote + '</td>' +
+      '<td class="game-type"><span class="game-type-pill ' + pill.cls + '">' + pill.text + '</span></td>' +
+      '<td class="team-cell"><span class="team-name">' + g.away_team + '</span> <input class="score" type="number" min="0" value="' + awayVal + '" data-i="' + i + '" data-side="away"' + scoreDisabled + '></td>' +
+      '<td class="vs">@</td>' +
+      '<td class="team-cell"><span class="team-name">' + g.home_team + '</span> <input class="score" type="number" min="0" value="' + homeVal + '" data-i="' + i + '" data-side="home"' + scoreDisabled + '></td>';
+    tb.appendChild(tr);
+  });
+}
+
+function onEdit(e) {
+  const t = e.target;
+  const i = +t.dataset.i;
+  if (Number.isNaN(i)) return;
+  const raw = t.value;
+  const num = raw === '' ? null : +raw;
+  if (t.dataset.side === 'away') games[i].away_goals = num;
+  if (t.dataset.side === 'home') games[i].home_goals = num;
+  const a = games[i].away_goals;
+  const h = games[i].home_goals;
+  games[i].played = (a !== null && a !== undefined) && (h !== null && h !== undefined);
+  t.closest('tr').classList.toggle('played', games[i].played);
+  t.classList.add('dirty');
+  setDirty(true);
+}
+
+document.getElementById('addMedal').addEventListener('change', (e) => {
+  const labelInput = document.getElementById('addLabel');
+  labelInput.hidden = e.target.value !== 'custom';
+  if (!labelInput.hidden) labelInput.focus();
+});
+
+function localDateTimeToISO(s) {
+  if (!s) return '';
+  const d = new Date(s);
+  if (isNaN(d.getTime())) return '';
+  const offset = -d.getTimezoneOffset();
+  const sign = offset >= 0 ? '+' : '-';
+  const totalMin = Math.abs(offset);
+  const hh = Math.floor(totalMin / 60);
+  const mm = totalMin - hh * 60;
+  const oh = String(hh).padStart(2, '0');
+  const om = String(mm).padStart(2, '0');
+  return s + ':00' + sign + oh + ':' + om;
+}
+
+document.getElementById('addBtn').addEventListener('click', () => {
+  const away = document.getElementById('addAway').value;
+  const home = document.getElementById('addHome').value;
+  const medal = document.getElementById('addMedal').value;
+  const customLabel = document.getElementById('addLabel').value.trim();
+  const startTime = localDateTimeToISO(document.getElementById('addTime').value);
+  const venue = document.getElementById('addVenue').value;
+  if (!away || !home || away === home) return;
+  if (medal === 'custom' && !customLabel) return;
+  const g = { away_team: away, home_team: home, away_goals: 0, home_goals: 0, played: false };
+  if (startTime) g.start_time = startTime;
+  if (venue)     g.venue      = venue;
+  const trackA = TEAM_TRACK[away];
+  const trackH = TEAM_TRACK[home];
+  if (trackA && trackA === trackH) g.track = trackA;
+  if (medal === 'gold')   { g.medal = 'gold';   g.label = 'Gold Medal Game'; }
+  if (medal === 'bronze') { g.medal = 'bronze'; g.label = 'Bronze Medal Game'; }
+  if (medal === 'custom') { g.label = customLabel; }
+  games.push(g);
+  document.getElementById('addAway').value = '';
+  document.getElementById('addHome').value = '';
+  document.getElementById('addMedal').value = '';
+  document.getElementById('addLabel').value = '';
+  document.getElementById('addLabel').hidden = true;
+  document.getElementById('addTime').value = '';
+  sortGames();
+  renderGames();
+  setDirty(true);
+});
+
+// Simulated Save — no network. Mirrors the production status messages.
+document.getElementById('saveBtn').addEventListener('click', () => {
+  setStatus('saving…');
+  document.getElementById('saveBtn').disabled = true;
+  setTimeout(() => {
+    setDirty(false);
+    setStatus('saved (demo only)', 'saved');
+    document.querySelectorAll('.score.dirty').forEach((el) => el.classList.remove('dirty'));
+  }, 700);
+});
+
+document.querySelectorAll('.time-shortcut').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const mins = +btn.dataset.mins || 0;
+    const d = new Date(Date.now() + mins * 60 * 1000);
+    const pad = n => String(n).padStart(2, '0');
+    const local = d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+    document.getElementById('addTime').value = local;
+  });
+});
+
+function isoToLocalDateTime(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  const pad = n => String(n).padStart(2, '0');
+  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+}
+
+function populateEditVenueOptions() {
+  const addSel = document.getElementById('addVenue');
+  const editSel = document.getElementById('editVenue');
+  if (!addSel || !editSel) return;
+  editSel.innerHTML = addSel.innerHTML;
+}
+
+let editingIndex = -1;
+function openEditDialog(i) {
+  editingIndex = i;
+  const g = games[i];
+  document.getElementById('editAway').value  = g.away_team || '';
+  document.getElementById('editHome').value  = g.home_team || '';
+  document.getElementById('editLabel').value = g.label || '';
+  document.getElementById('editTrack').value = g.track || '';
+  document.getElementById('editTime').value  = isoToLocalDateTime(g.start_time);
+  populateEditVenueOptions();
+  document.getElementById('editVenue').value = g.venue || '';
+  document.getElementById('editDialog').showModal();
+}
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  games = INITIAL_GAMES.map((g) => ({ ...g }));
+  dirty = false;
+  document.getElementById('saveBtn').disabled = true;
+  document.getElementById('status').hidden = true;
+  sortGames();
+  renderGames();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const dlg = document.getElementById('editDialog');
+  dlg.querySelector('.dialog-close').addEventListener('click', () => dlg.close());
+  document.getElementById('editCancel').addEventListener('click', () => dlg.close());
+  document.getElementById('editApply').addEventListener('click', () => {
+    if (editingIndex < 0) { dlg.close(); return; }
+    const g = games[editingIndex];
+    const newAway  = document.getElementById('editAway').value;
+    const newHome  = document.getElementById('editHome').value;
+    const newLabel = document.getElementById('editLabel').value.trim();
+    const newTrack = document.getElementById('editTrack').value;
+    const newTime  = localDateTimeToISO(document.getElementById('editTime').value);
+    const newVenue = document.getElementById('editVenue').value;
+    if (newAway && newHome && newAway === newHome) return;
+    if (newAway)  g.away_team = newAway;
+    if (newHome)  g.home_team = newHome;
+    if (newLabel) g.label = newLabel; else delete g.label;
+    if (newTrack) g.track = newTrack; else delete g.track;
+    if (newTime)  g.start_time = newTime; else delete g.start_time;
+    if (newVenue) g.venue = newVenue;     else delete g.venue;
+    editingIndex = -1;
+    dlg.close();
+    sortGames();
+    renderGames();
+    setDirty(true);
+  });
+
+  const tb = document.querySelector('#games tbody');
+  tb.addEventListener('input', onEdit);
+  tb.addEventListener('change', onEdit);
+  tb.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('edit-link')) return;
+    const i = +e.target.dataset.i;
+    if (!Number.isNaN(i)) openEditDialog(i);
+  });
+
+  loadTeams();
+  sortGames();
+  renderGames();
+});
+</script>
+</body>
+</html>

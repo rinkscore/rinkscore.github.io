@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intake form · RinkScore</title>
+  <meta name="description" content="Tell us about your tournament. Download the YAML, email it to hello@rinkscore.ca with your assets.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Narrow:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Intake form | RinkScore</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Intake form" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Tell us about your tournament. Download the YAML, email it to hello@rinkscore.ca with your assets." />
+<meta name="twitter:description" property="og:description" content="Tell us about your tournament. Download the YAML, email it to hello@rinkscore.ca with your assets." />
+<link rel="canonical" href="https://rinkscore.ca/intake/" />
+<meta property="og:url" content="https://rinkscore.ca/intake/" />
+<meta property="og:site_name" content="RinkScore" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Intake form" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Tell us about your tournament. Download the YAML, email it to hello@rinkscore.ca with your assets.","headline":"Intake form","url":"https://rinkscore.ca/intake/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body class="page-intake-form">
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">
+        <span class="brand-mark">Rink</span><span class="brand-sub">Score</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        
+        <a href="/"
+           >
+          Home
+        </a>
+        
+        <a href="/about/"
+           >
+          About
+        </a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <section class="page-header tight">
+  <div class="wrap">
+    <p class="eyebrow">Tournament intake</p>
+    <h1>RinkScore Intake Form</h1>
+    <p class="lede">Tell us about your tournament in as much detail as you can — the more we know, the better the site we'll build for you.</p>
+  </div>
+</section>
+
+<section>
+  <div class="form-page">
+
+  <p class="form-intro">
+    Fill in what you have. Skip what you don&rsquo;t. Required fields are marked <span class="req">*</span>. Optional ones improve the site but won&rsquo;t block you.
+  </p>
+
+  <form id="intake-form" novalidate>
+
+    <!-- =========================================================== -->
+    <!-- Web address                                                 -->
+    <!-- =========================================================== -->
+    <fieldset class="section" data-section="web-address">
+      <legend>Web address / URL</legend>
+
+      <span class="label">Do you want a custom URL such as <code>fancy-tourney.ca</code>? <span class="req">*</span></span>
+
+      <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
+        <input type="radio" name="custom_domain.wanted" value="yes" style="width:auto; margin-top: 0.25rem;">
+        <span>Yes, we'd like one for our tournament!</span>
+      </label>
+
+      <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
+        <input type="radio" name="custom_domain.wanted" value="no" style="width:auto; margin-top: 0.25rem;">
+        <span>No, <code>rinkscore.ca/2026/&lt;short-url-name&gt;</code> is fine (free).</span>
+      </label>
+
+      <div id="custom-domain-followup" hidden style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line);">
+        <span class="label">Do you have your own domain name?</span>
+
+        <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
+          <input type="radio" name="custom_domain.owns" value="yes" style="width:auto; margin-top: 0.25rem;">
+          <span>Yes, we do own one.</span>
+        </label>
+
+        <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
+          <input type="radio" name="custom_domain.owns" value="not_yet" style="width:auto; margin-top: 0.25rem;">
+          <span>Not yet. Check your desired name and cost via <a href="https://www.name.com" target="_blank" rel="noopener noreferrer">name.com</a> and let us know!</span>
+        </label>
+
+        <label class="field" id="custom-domain-field" hidden>
+          <span class="label">Domain</span>
+          <input type="text" name="custom_domain.domain" placeholder="e.g. fancy-tourney.ca">
+          <span class="hint">The domain you own, or the one you're planning to register.</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- =========================================================== -->
+    <!-- Tournament identity                                         -->
+    <!-- =========================================================== -->
+    <fieldset class="section" data-section="identity">
+      <legend>Tournament identity</legend>
+      <div class="row-grid">
+        <label class="field">
+          <span class="label">Tournament name <span class="req">*</span></span>
+          <input type="text" name="tournament.name" placeholder="e.g. Fancy Tourney 2026" required>
+        </label>
+        <label class="field">
+          <span class="label">Short URL name</span>
+          <input type="text" name="tournament.slug" placeholder="fancy-tourney">
+          <span class="hint">Your tournament URL: <code>rinkscore.ca/2026/<span id="slug-preview">&lt;short-url-name&gt;</span></code></span>
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="label">Subtitle <small>(optional)</small></span>
+        <input type="text" name="tournament.subtitle" placeholder="e.g. Annual U13 invitational">
+        <span class="hint">A small line that sits below your tournament name.</span>
+      </label>
+
+      <label class="field">
+        <span class="label">Tagline</span>
+        <input type="text" name="tournament.tagline" placeholder="e.g. Where the next great story starts.">
+      </label>
+
+      <label class="field">
+        <span class="label">Long-form description <small>(optional)</small></span>
+        <textarea name="tournament.description" rows="3" placeholder="e.g. Thirty-ninth running of the Frost Bowl. Six U15 AA programs from Ontario and Quebec converge on the capital for a long-weekend round-robin, semifinals, and championship final."></textarea>
+        <span class="hint">1–3 sentences of narrative copy for the hero. Skip if the tagline alone is enough.</span>
+      </label>
+
+      <div class="row-grid">
+        <label class="field">
+          <span class="label">Inaugural year</span>
+          <input type="text" name="tournament.established" placeholder="e.g. 2018">
+        </label>
+        <label class="field">
+          <span class="label">Edition</span>
+          <input type="text" name="tournament.edition" placeholder="e.g. 8th Annual">
+        </label>
+        <label class="field">
+          <span class="label">Age division</span>
+          <input type="text" name="tournament.age_division" placeholder="e.g. U13">
+        </label>
+        <label class="field">
+          <span class="label">Skill tier</span>
+          <input type="text" name="tournament.skill_tier" placeholder="e.g. AA">
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="label">Hosting organization <span class="req">*</span></span>
+        <input type="text" name="tournament.hosting_organization" placeholder="e.g. Sample Minor Hockey Association" required>
+      </label>
+
+      <label class="field">
+        <span class="label">Sanctioned by (if any)</span>
+        <input type="text" name="tournament.sanctioning_body" placeholder="e.g. Hockey Canada · Hockey Alberta">
+      </label>
+    </fieldset>
+
+    <!-- =========================================================== -->
+    <!-- Design                                                      -->
+    <!-- =========================================================== -->
+    <fieldset class="section" data-section="design">
+      <legend>Design</legend>
+
+      <span class="label">Do you have a logo for your tournament? <span class="req">*</span></span>
+
+      <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
+        <input type="radio" name="design.logo_status" value="have" style="width:auto; margin-top: 0.25rem;">
+        <span>Yes, we already have one.</span>
+      </label>
+
+      <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
+        <input type="radio" name="design.logo_status" value="need" style="width:auto; margin-top: 0.25rem;">
+        <span>No, we need one.</span>
+      </label>
+
+      <label class="field" id="logo-direction-field" hidden>
+        <span class="label">Describe the logo you'd like — a few sentences on format, colour, and shape.</span>
+        <textarea name="design.logo_direction" rows="4" placeholder="e.g. A minimalist circular emblem in navy and red, featuring a stylised hockey stick and a mountain silhouette. Should feel youthful and energetic. Modern, clean sans-serif typography around it."></textarea>
+      </label>
+
+      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line);">
+        <span class="label">Do you have a specific theme you'd like from our gallery? <span class="req">*</span></span>
+
+        <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
+          <input type="radio" name="design.theme_status" value="have" style="width:auto; margin-top: 0.25rem;">
+          <span>Yes, we already have one.</span>
+        </label>
+
+        <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
+          <input type="radio" name="design.theme_status" value="need" style="width:auto; margin-top: 0.25rem;">
+          <span>No, we don't have one yet.</span>
+        </label>
+
+        <label class="field" id="theme-pick-field" hidden>
+          <span class="label">Pick a theme</span>
+          <select name="design.theme">
+            <option value="">— choose one —</option>
+            <option value="ApexIce">Apex Ice</option>
+            <option value="CyberFrost">Cyber Frost</option>
+            <option value="ElectricVictory">Electric Victory</option>
+            <option value="EliteTournamentCircut">Elite Tournament Circuit</option>
+            <option value="Fairplay">Fairplay</option>
+            <option value="HeritageClassic">Heritage Classic</option>
+            <option value="JuniorStars">Junior Stars</option>
+            <option value="PowerPlayPink">Power Play Pink</option>
+            <option value="SummerFrost">Summer Frost</option>
+            <option value="VelocityIce">Velocity Ice</option>
+            <option value="WhiteEdition">White Edition</option>
+            <option value="YouthSpirit">Youth Spirit</option>
+          </select>
+        </label>
+
+        <label class="field" id="theme-describe-field" hidden>
+          <span class="label">Tell us what kind of theme you'd like</span>
+          <textarea name="design.theme_description" rows="4" placeholder="e.g. We host this tournament every year to support the Fight For Cancer fundraiser. We'd love a theme that reflects our cause — warm, uplifting colours and imagery that let people feel our spirit the moment they land on the page. Overall feel: welcoming and community-driven, not corporate."></textarea>
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- =========================================================== -->
+    <!-- Format                                                      -->
+    <!-- =========================================================== -->
+    <!-- =========================================================== -->
+    <!-- Venues  (placed above Teams so Schedule can pull venue       -->
+    <!-- names from a section that's already been filled in)          -->
+    <!-- =========================================================== -->
+    <fieldset class="section" data-section="venues">
+      <legend>Venues</legend>
+      <div data-repeatable="tournament.venues" data-min="0">
+        <div class="repeat-list" data-list></div>
+        <button type="button" class="btn-mini" data-add>+ Add venue</button>
+      </div>
+    </fieldset>
+
+    <!-- =========================================================== -->
+    <!-- Teams                                                       -->
+    <!-- =========================================================== -->
+    <fieldset class="section" data-section="teams">
+      <legend>Teams</legend>
+
+      <label class="field">
+        <span class="label">How many pools will your tournament have? <span class="req">*</span></span>
+        <input type="number" name="teams.pool_count" min="1" max="20" placeholder="e.g. 2">
+      </label>
+
+      <label class="field" id="teams-per-pool-field" hidden>
+        <span class="label">How many teams will play in each pool? <span class="req">*</span></span>
+        <input type="number" name="teams.per_pool" min="2" max="50" placeholder="e.g. 4">
+      </label>
+
+      <label class="field" id="teams-total-field" hidden>
+        <span class="label">How many teams will play in total? <span class="req">*</span></span>
+        <input type="number" name="teams.total" min="2" max="50" placeholder="e.g. 4">
+      </label>
+
+      <div data-repeatable="tournament.teams" data-min="0" id="teams-repeatable" style="margin-top: 1rem;">
+        <div class="repeat-list" data-list></div>
+        <button type="button" class="btn-mini" data-add>+ Add team</button>
+      </div>
+    </fieldset>
+
+    <!-- =========================================================== -->
+    <!-- Game schedule                                               -->
+    <!-- =========================================================== -->
+    <fieldset class="section" data-section="schedule">
+      <legend>Game schedule</legend>
+      <p class="hint" style="margin: 0 0 0.75rem;">
+        Fill in <strong>Venues</strong> and <strong>Teams</strong> above first — the team and venue dropdowns in each game row are populated from those sections.
+      </p>
+      <div data-repeatable="tournament.games" data-min="0" id="games-repeatable">
+        <div class="repeat-list" data-list></div>
+        <button type="button" class="btn-mini" data-add>+ Add game</button>
+      </div>
+    </fieldset>
+
+    <!-- =========================================================== -->
+    <!-- Events                                                      -->
+    <!-- =========================================================== -->
+    <fieldset class="section" data-section="events">
+      <legend>Events</legend>
+      <p class="hint" style="margin: 0 0 0.75rem;">
+        Tournament-adjacent events that aren't games — welcome reception, team dinner, skills competition, awards banquet, etc.
+      </p>
+      <div data-repeatable="tournament.events" data-min="0">
+        <div class="repeat-list" data-list></div>
+        <button type="button" class="btn-mini" data-add>+ Add event</button>
+      </div>
+    </fieldset>
+
+    <!-- =========================================================== -->
+    <!-- Fundraisers                                                 -->
+    <!-- =========================================================== -->
+    <fieldset class="section" data-section="fundraisers">
+      <legend>Fundraisers</legend>
+      <div data-repeatable="tournament.fundraisers" data-min="0">
+        <div class="repeat-list" data-list></div>
+        <button type="button" class="btn-mini" data-add>+ Add fundraiser</button>
+      </div>
+    </fieldset>
+
+    <!-- =========================================================== -->
+    <!-- Social                                                      -->
+    <!-- =========================================================== -->
+    <fieldset class="section" data-section="social">
+      <legend>Social</legend>
+      <div data-repeatable="tournament.social" data-min="0">
+        <div class="repeat-list" data-list></div>
+        <button type="button" class="btn-mini" data-add>+ Add account</button>
+      </div>
+    </fieldset>
+
+    <!-- =========================================================== -->
+    <!-- Sponsors                                                    -->
+    <!-- =========================================================== -->
+    <fieldset class="section" data-section="sponsors">
+      <legend>Sponsors</legend>
+      <div data-repeatable="tournament.sponsors" data-min="0">
+        <div class="repeat-list" data-list></div>
+        <button type="button" class="btn-mini" data-add>+ Add sponsor</button>
+      </div>
+    </fieldset>
+
+    <!-- =========================================================== -->
+    <!-- Actions                                                     -->
+    <!-- =========================================================== -->
+    <div class="form-actions" style="justify-content: flex-end;">
+      <button type="button" id="download-btn" class="btn btn-primary">
+        Download YAML <span class="arrow" aria-hidden="true">↓</span>
+      </button>
+    </div>
+
+    <details style="margin-top:1rem;">
+      <summary style="cursor:pointer; color: var(--ink-mute); font-size: 0.9rem;">Preview YAML</summary>
+      <pre id="yaml-preview" style="background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 1rem; overflow:auto; font-family: var(--font-mono); font-size: 0.85rem; max-height: 360px; margin-top: 0.6rem;"></pre>
+    </details>
+
+  </form>
+
+  <div class="form-callout" id="package-checklist" style="margin-top: 2rem;">
+    <!-- Dynamically populated by intake.js based on form answers. -->
+  </div>
+
+  </div>
+</section>
+
+<!-- =============================================================
+     Row templates (cloned by JS)
+     ============================================================= -->
+
+<template id="tpl-tournament.teams">
+  <div class="repeat-item team-card">
+    <div class="row-grid">
+      <label class="field"><span class="label">Team name <span class="req">*</span></span><input type="text" data-key="name" placeholder="e.g. Calgary Flames"></label>
+      <label class="field"><span class="label">Hometown</span><input type="text" data-key="hometown" placeholder="e.g. Calgary, AB"></label>
+    </div>
+    <div class="row-grid">
+      <label class="field"><span class="label">Latitude <small>(optional — auto-geocoded if blank)</small></span><input type="number" step="any" data-key="lat" placeholder="e.g. 51.0447"></label>
+      <label class="field"><span class="label">Longitude <small>(optional — auto-geocoded if blank)</small></span><input type="number" step="any" data-key="lon" placeholder="e.g. -114.0719"></label>
+    </div>
+    <label class="field team-pool-field" hidden><span class="label">Pool</span><input type="text" data-key="track" placeholder="e.g. Pool A"></label>
+    <label class="field"><span class="label">Team intro <span class="req">*</span></span><textarea data-key="description" rows="3" placeholder="e.g. The Calgary Flames are a U13 AA program founded in 2010. Twice provincial finalists, they return four veterans this season and welcome a new head coach. Known for fast transition play and a relentless forecheck."></textarea></label>
+    <div class="row-grid">
+      <label class="field"><span class="label">Amount raised <small>(optional, $)</small></span>
+        <input type="number" min="0" step="any" data-key="raised_amount" placeholder="e.g. 1250">
+      </label>
+      <label class="field"><span class="label">Team goal <small>(optional, $)</small></span>
+        <input type="number" min="0" step="any" data-key="target_amount" placeholder="e.g. 1000">
+      </label>
+    </div>
+    <span class="hint">Only for fundraiser-tournaments where each team has a personal raise target. Both required to render the progress chip.</span>
+    <div class="repeat-controls"><button type="button" class="btn-mini remove" data-remove>Remove</button></div>
+  </div>
+</template>
+
+<template id="tpl-tournament.venues">
+  <div class="repeat-item">
+    <div class="row-grid">
+      <label class="field"><span class="label">Venue type</span>
+        <select data-key="kind">
+          <option value="rink">Rink</option>
+          <option value="hotel">Hotel</option>
+        </select>
+      </label>
+      <label class="field"><span class="label">Venue name <span class="req">*</span></span><input type="text" data-key="name" placeholder="e.g. Sample Recreation Centre"></label>
+    </div>
+    <div class="row-grid">
+      <label class="field"><span class="label">City <span class="req">*</span></span><input type="text" data-key="city" placeholder="e.g. Sample Town, AB"></label>
+      <label class="field"><span class="label">Address <span class="req">*</span></span><input type="text" data-key="address" placeholder="e.g. 123 Main Street, Sample Town, AB T0L 0X0"></label>
+    </div>
+    <div class="row-grid">
+      <label class="field"><span class="label">Label override <small>(optional)</small></span>
+        <input type="text" data-key="label" placeholder="e.g. Main Rink, Team Hotel">
+      </label>
+      <label class="field"><span class="label">Notes <small>(optional)</small></span>
+        <input type="text" data-key="notes" placeholder="e.g. Two ice sheets, limited parking">
+      </label>
+    </div>
+    <div class="repeat-controls"><button type="button" class="btn-mini remove" data-remove>Remove</button></div>
+  </div>
+</template>
+
+<template id="tpl-tournament.games">
+  <div class="repeat-item game-card">
+    <div class="row-grid">
+      <label class="field"><span class="label">Game type</span>
+        <select data-key="kind" class="game-kind">
+          <option value="round-robin">Round robin</option>
+          <option value="bronze">Bronze medal game</option>
+          <option value="gold">Gold medal game</option>
+          <option value="other">Other (custom label)</option>
+        </select>
+      </label>
+      <label class="field game-label-field" hidden><span class="label">Game label <span class="req">*</span></span>
+        <input type="text" data-key="label" placeholder="e.g. Championship Final, Pool A Crossover">
+      </label>
+    </div>
+    <div class="row-grid">
+      <label class="field"><span class="label">Away <span class="team-optional" hidden style="color:var(--ink-mute);font-weight:normal;">(leave blank if TBD)</span></span>
+        <select data-key="away"><option value="">— choose team —</option></select>
+      </label>
+      <label class="field"><span class="label">Home <span class="team-optional" hidden style="color:var(--ink-mute);font-weight:normal;">(leave blank if TBD)</span></span>
+        <select data-key="home"><option value="">— choose team —</option></select>
+      </label>
+    </div>
+    <div class="row-grid">
+      <label class="field"><span class="label">Date <span class="req">*</span></span><input type="date" data-key="date"></label>
+      <label class="field"><span class="label">Time <span class="req">*</span></span><input type="time" data-key="time"></label>
+    </div>
+    <div class="row-grid">
+      <label class="field"><span class="label">Venue <span class="req">*</span></span>
+        <select data-key="venue"><option value="">— choose venue —</option></select>
+      </label>
+      <label class="field"><span class="label">Ice</span>
+        <input type="text" data-key="ice" placeholder="e.g. North, Red, Olympic, Rink 1">
+      </label>
+    </div>
+    <div class="repeat-controls"><button type="button" class="btn-mini remove" data-remove>Remove</button></div>
+  </div>
+</template>
+
+<template id="tpl-tournament.events">
+  <div class="repeat-item">
+    <label class="field"><span class="label">Event name <span class="req">*</span></span><input type="text" data-key="name" placeholder="e.g. Welcome Reception, Team Dinner, Awards Banquet"></label>
+    <div class="row-grid">
+      <label class="field"><span class="label">Date</span><input type="date" data-key="date"></label>
+      <label class="field"><span class="label">Time</span><input type="time" data-key="time"></label>
+    </div>
+    <label class="field"><span class="label">Venue / location</span><input type="text" data-key="venue" placeholder="e.g. Sample Inn — Banquet Hall, Main Rink Lobby"></label>
+    <label class="field"><span class="label">Address</span><input type="text" data-key="address" placeholder="e.g. 123 Main Street, Calgary, AB T2P 0A1"></label>
+    <div class="repeat-controls"><button type="button" class="btn-mini remove" data-remove>Remove</button></div>
+  </div>
+</template>
+
+<template id="tpl-tournament.fundraisers">
+  <div class="repeat-item">
+    <div class="row-grid">
+      <label class="field"><span class="label">Title <span class="req">*</span></span><input type="text" data-key="title" placeholder="e.g. 50/50 Raffle"></label>
+      <label class="field"><span class="label">Type</span>
+        <select data-key="kind">
+          <option value="fundraiser">Fundraiser</option>
+          <option value="merchandise">Merchandise</option>
+          <option value="donation">Donation</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+    </div>
+    <label class="field"><span class="label">Description <span class="req">*</span></span>
+      <textarea data-key="description" rows="3" placeholder="e.g. Tickets sold rink-side. Winner announced at the awards banquet."></textarea>
+      <span class="hint">1–2 sentences. Shows on the fundraiser card.</span>
+    </label>
+    <div class="row-grid">
+      <label class="field"><span class="label">Icon <small>(Material Symbol name, optional)</small></span>
+        <input type="text" data-key="icon" placeholder="e.g. confirmation_number, volunteer_activism, redeem">
+      </label>
+      <label class="field"><span class="label">Link</span><input type="url" data-key="link" placeholder="https://..."></label>
+    </div>
+    <div class="row-grid">
+      <label class="field"><span class="label">Amount raised <small>(optional, $)</small></span>
+        <input type="number" min="0" step="any" data-key="raised_amount" placeholder="e.g. 3200">
+      </label>
+      <label class="field"><span class="label">Goal <small>(optional, $)</small></span>
+        <input type="number" min="0" step="any" data-key="target_amount" placeholder="e.g. 3000">
+      </label>
+    </div>
+    <span class="hint">Both raised + goal together render a progress bar on the card. Leave blank for a static card.</span>
+    <div class="repeat-controls"><button type="button" class="btn-mini remove" data-remove>Remove</button></div>
+  </div>
+</template>
+
+<template id="tpl-tournament.sponsors">
+  <div class="repeat-item">
+    <div class="row-grid">
+      <label class="field"><span class="label">Sponsor name</span><input type="text" data-key="name" placeholder="e.g. Sample Hardware Co."></label>
+      <label class="field"><span class="label">Link</span><input type="url" data-key="link" placeholder="https://..."></label>
+    </div>
+    <div class="repeat-controls"><button type="button" class="btn-mini remove" data-remove>Remove</button></div>
+  </div>
+</template>
+
+<template id="tpl-tournament.social">
+  <div class="repeat-item">
+    <div class="row-grid">
+      <label class="field"><span class="label">Platform</span>
+        <select data-key="platform">
+          <option value="facebook">Facebook</option>
+          <option value="instagram">Instagram</option>
+          <option value="twitter">X (Twitter)</option>
+          <option value="youtube">YouTube</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+      <label class="field"><span class="label">URL</span><input type="url" data-key="url" placeholder="https://..."></label>
+    </div>
+    <div class="repeat-controls"><button type="button" class="btn-mini remove" data-remove>Remove</button></div>
+  </div>
+</template>
+
+<script src="/assets/js/vendor/js-yaml.min.js"></script>
+<script src="/assets/js/intake.js"></script>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 RinkScore. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
