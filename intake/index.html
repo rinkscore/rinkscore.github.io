@@ -176,22 +176,24 @@
     <fieldset class="section" data-section="design">
       <legend>Design</legend>
 
-      <span class="label">Do you have a logo for your tournament? <span class="req">*</span></span>
+      <div>
+        <span class="label">Do you have a logo for your tournament? <span class="req">*</span></span>
 
-      <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
-        <input type="radio" name="design.logo_status" value="have" style="width:auto; margin-top: 0.25rem;">
-        <span>Yes, we already have one.</span>
-      </label>
+        <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
+          <input type="radio" name="design.logo_status" value="have" style="width:auto; margin-top: 0.25rem;">
+          <span>Yes, we already have one.</span>
+        </label>
 
-      <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
-        <input type="radio" name="design.logo_status" value="need" style="width:auto; margin-top: 0.25rem;">
-        <span>No, we need one.</span>
-      </label>
+        <label class="field" style="display:flex; align-items:flex-start; gap:0.6rem; margin: 0.4rem 0;">
+          <input type="radio" name="design.logo_status" value="need" style="width:auto; margin-top: 0.25rem;">
+          <span>No, we need one.</span>
+        </label>
 
-      <label class="field" id="logo-direction-field" hidden>
-        <span class="label">Describe the logo you'd like — a few sentences on format, colour, and shape.</span>
-        <textarea name="design.logo_direction" rows="4" placeholder="e.g. A minimalist circular emblem in navy and red, featuring a stylised hockey stick and a mountain silhouette. Should feel youthful and energetic. Modern, clean sans-serif typography around it."></textarea>
-      </label>
+        <label class="field" id="logo-direction-field" hidden>
+          <span class="label">Describe the logo you'd like — a few sentences on format, colour, and shape.</span>
+          <textarea name="design.logo_direction" rows="4" placeholder="e.g. A minimalist circular emblem in navy and red, featuring a stylised hockey stick and a mountain silhouette. Should feel youthful and energetic. Modern, clean sans-serif typography around it."></textarea>
+        </label>
+      </div>
 
       <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line);">
         <span class="label">Do you have a specific theme you'd like from our gallery? <span class="req">*</span></span>
@@ -210,18 +212,18 @@
           <span class="label">Pick a theme</span>
           <select name="design.theme">
             <option value="">— choose one —</option>
-            <option value="ApexIce">Apex Ice</option>
-            <option value="CyberFrost">Cyber Frost</option>
-            <option value="ElectricVictory">Electric Victory</option>
-            <option value="EliteTournamentCircut">Elite Tournament Circuit</option>
-            <option value="Fairplay">Fairplay</option>
-            <option value="HeritageClassic">Heritage Classic</option>
-            <option value="JuniorStars">Junior Stars</option>
-            <option value="PowerPlayPink">Power Play Pink</option>
-            <option value="SummerFrost">Summer Frost</option>
-            <option value="VelocityIce">Velocity Ice</option>
-            <option value="WhiteEdition">White Edition</option>
-            <option value="YouthSpirit">Youth Spirit</option>
+            <option value="ApexIce">Big City Faceoff - Apex Ice</option>
+            <option value="CyberFrost">Arctic Circuit Showcase - Cyber Frost</option>
+            <option value="ElectricVictory">Spring Blast 3-on-3 - Electric Victory</option>
+            <option value="EliteTournamentCircut">Nightfall Invitational - Elite Tournament Circuit</option>
+            <option value="Fairplay">Toronto Inclusion Cup - Fairplay</option>
+            <option value="HeritageClassic">Frost Bowl Heritage Cup - Heritage Classic</option>
+            <option value="JuniorStars">Stampede City Spring Classic - Junior Stars</option>
+            <option value="PowerPlayPink">Pink the Rink - Power Play Pink</option>
+            <option value="SummerFrost">The Ice Bucket Classic - Summer Frost</option>
+            <option value="VelocityIce">Skills &amp; Speed Open - Velocity Ice</option>
+            <option value="WhiteEdition">Northbridge Exhibition - White Edition</option>
+            <option value="YouthSpirit">Harbour Cup Spring Classic - Youth Spirit</option>
           </select>
         </label>
 
